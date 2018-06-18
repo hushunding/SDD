@@ -1,0 +1,45 @@
+
+    <nz-layout class="layout">
+      <nz-header style="background:whitesmoke">
+          <img class="logo" src="assets/unittec_log.svg">
+          <h1  style="text-align: center"> BiTRACON 800系统应用数据 </h1> 
+      </nz-header>
+      <nz-layout>
+        <nz-sider [nzWidth]="200" style="background:#fff">
+          <ul nz-menu [nzMode]="'inline'" style="height:100%">
+            <li nz-submenu [nzOpen]="true">
+              <span title><i class="anticon anticon-upload"></i>输入</span>
+              <ul>
+                <li nz-menu-item ><a routerLink='/vhl'>车辆参数</a> </li>
+                <li nz-menu-item><a routerLink='/ep'>设备及线路参数</a></li>
+                <li nz-menu-item>系统基本参数</li>
+              </ul>
+            </li>
+            <li nz-submenu [nzOpen]="true">
+              <span title><i class="anticon anticon-download"></i>输出</span>
+              <ul>
+                <li nz-menu-item>option5</li>
+                <li nz-menu-item>option6</li>
+                <li nz-menu-item>option7</li>
+                <li nz-menu-item>option8</li>
+              </ul>
+            </li>
+            <li nz-submenu [nzOpen]="true">
+              <span title><i class="anticon anticon-link"></i>附表</span>
+              <ul>
+                <li nz-menu-item>option9</li>
+                <li nz-menu-item>option10</li>
+                <li nz-menu-item>option11</li>
+                <li nz-menu-item>option12</li>
+              </ul>
+            </li>
+          </ul>
+        </nz-sider>
+        <nz-layout style="padding:0 6px 24px">
+          <nz-content style="background:#fff; padding: 24px; min-height: 280px;">
+          <router-outlet></router-outlet>  
+          </nz-content>
+        </nz-layout>
+      </nz-layout>
+    </nz-layout>
+  
