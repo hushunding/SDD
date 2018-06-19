@@ -3,7 +3,7 @@ export interface INormalParamEntry {
     SeqNo?: string;
     Desc?: string;
     Unit?: string;
-    Value?: string;
+    Value?: string | number;
 }
 export interface IVhlParm {
     Veh_Marshal: INormalParamEntry;
