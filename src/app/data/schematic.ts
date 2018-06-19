@@ -1,0 +1,47 @@
+export const schematic = {
+    Version: "2.4",
+    Vehicle: {  //车辆参数
+        Veh_Marshal: ["列车编组方式", "辆", "车辆厂家", ],
+        Veh_ConstructSpeed: ["列车构造速度", "km/h", "车辆厂家", ],
+        Veh_Length: ["列车长度（一端车钩到另一端车钩）", "m", "车辆厂家", ],
+        Veh_Hook2Roller: ["列车车钩到第一轮对距离（可被区段占用检测设备识别）", "m", "车辆厂家", ],
+        Veh_Hook2Ante: ["列车车钩到天线中心距离", "m", "车辆厂家", ],
+        Veh_MaxAcc: ["列车最大牵引加速度（不含空转、不含坡度）", "m/s/s", "车辆厂家", ],
+        Veb_MaxDec: ["列车最大制动减速度（不含打滑、不含坡度）", "m/s/s", "车辆厂家", ],
+        Veh_NormDec: ["列车常用制动率", "m/s/s", "车辆厂家", ],
+        Veh_Gebr: ["可保证的EB制动率GEBR（考虑线路最差环境条件）", "m/s/s", "车辆厂家", ],
+        Veh_Fsbr: ["列车全常用制动率", "m/s/s", "车辆厂家", ],
+        Veh_FsbTracCutDelay: ["FSB命令下的牵引切除时间（牵引系统收到车载FSB指令到牵引切除所需要的时间）", "ms", "车辆厂家", ],
+        Veh_EbTracCutDelay: ["EB命令下的牵引切除延迟时间（牵引系统收到车载EB指令到牵引切除所需要的时间）", "ms", "车辆厂家", ],
+        Veh_FsbSetDelay: ["FSB建立时间（制动系统从10%至90%建立所需要的时间）", "ms", "车辆厂家", ],
+        Veh_GebSetDelay: ["可保证EB制动率建立时间（制动系统从10%制动力至90%制动力建立所需要的时间。若牵引完全切除时10%制动力已建立，则该值为牵引完全切除到90%制动力建立时间）", "ms", "车辆厂家", ],
+        Veh_EbCoastTime: ["EB惰行时间（牵引切除至10%制动力的建立。若牵引完全切除时10%制动力已建立，则该值为零）", "ms", "车辆厂家", ],
+        Veh_FsbCoastTime: ["FSB惰行时间（牵引切除至10%制动力的建立）", "ms", "车辆厂家", ],
+        Veh_WheelSurfaceErr: ["车轮踏面外形尺寸误差", "‰", "车辆厂家", ],
+        Veh_MaxWheelDiameter: ["车轮最大轮径", "m", "车辆厂家", ],
+        Veh_MinWheelDiameter: ["车轮最小轮径", "m", "车辆厂家", ],
+        Veh_DoorWidth: ["车门宽度", "m", "车辆厂家", ],
+        Veh_CollisionSpd: ["车钩可接受的最大撞击速度", "km/h", "车辆厂家", ],
+    },
+    Equip: {
+        Equ_RadarPulseDist: ["多普勒雷达脉冲代表距离", "m", "雷达供货方"],
+        Equ_RadarTrigSpd: ["多普勒雷达激活速度", "km/h", "雷达供货方"],
+        Equ_RadarSpdDiff: ["多普勒雷达的测速误差", "m/s", "雷达供货方"],
+        Equ_RadarCycle: ["多普勒雷达报文发送周期", "ms", "雷达供货方"],
+        Equ_CyclePulseCount: ["速度计单圈脉冲点个数", "个", "速度计供货方"],
+        Equ_BeaconReadDiff: ["信标读取旁瓣误差", "m", "信标供货方"],
+        Equ_AxleClearDelay: ["计轴占用->出清反应时间（需含继电器动作时间）", "ms", "计轴供货方"],
+        Equ_AxleOccupyDelay: ["计轴出清->占用反应时间（需含继电器动作时间）", "ms", "计轴供货方"],
+        Equ_PsdProcessDelay: ["PSC处理时间（PSC收到开门指令到指令处理完成以及状态返回的时间）", "ms", "PSD供货方"],
+        Equ_PsdWidth: ["屏蔽门宽度", "m", "PSD供货方"],
+        Equ_BeaconWriteDelay: ["联锁信息写入应答器/信标时间", "ms", "信标供货方"],
+        Equ_CollisionSpd: ["车挡可接受的最大撞击速度", "km/h", "运营方"],
+        Equ_LoopComDelay: ["CBI通过通信环线与CC通信延迟时间（若无参考输入，以CFG_T_CBI_ALIVE_TO_CC为准）", "ms", "环线供应方"],
+        Equ_PsdRelayEnergDelay: ["屏蔽门控制继电器吸起时间", "ms", "继电器技术规格书"],
+        Equ_PsdClsRelayRlsDelay: ["屏蔽门全关闭状态继电器落下时间", "ms", "继电器技术规格书"],
+    },
+    Project:{
+        
+    }
+
+}
