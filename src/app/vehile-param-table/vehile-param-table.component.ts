@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { schematic } from '../data/schematic';
+import { TestVhlParam } from '../data/TestData';
 
 @Component({
   selector: 'app-vehile-param-table',
@@ -7,6 +9,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class VehileParamTableComponent implements OnInit {
 
+  VhlTableSch = schematic.Vehicle;
+  VhlParam = TestVhlParam;
   constructor() { }
 
   ngOnInit() {

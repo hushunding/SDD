@@ -1,4 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { INormalParamEntry, NormalParamTableSchemtic, ParamDataSet } from "../data/TableSchemtic";
+
+interface DataSchemtic extends INormalParamEntry {
+  SeqNo: number;
+  ParmName: string;
+}
 
 @Component({
   selector: 'normal-param-table',
@@ -6,53 +12,60 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./normal-param-table.component.css']
 })
 export class NormalParamTableComponent implements OnInit {
-  @Input() ConfCount = 1; //配置数量，默认值为1
-  @Input() isMultiConfig = false; //配置数量是否可变量
-
-  BaseTableHeads: Array<{ Name: string; Width: string }> = [{
-    Name: '序号',
-    Width: '24px'
-  },
-  {
-    Name: '参数',
-    Width: '100px'
-  },
-  {
-    Name: '描述',
-    Width: '200px'
-  },
-  {
-    Name: '单位',
-    Width: '50px'
-  },
-  {
-    Name: '配置值' + this.isMultiConfig ? "1" : "",
-    Width: '50px'
+  private _confCount = 1;//配置数量，默认值为1
+  @Input()
+  get ConfCount() {
+    return this._confCount;
+  };
+  set ConfCount(c) {
+    this.SetColumNumber(c);
+    this._confCount = c;
   }
-  ]
+  @Input() isMultiConfig = false; //配置数量是否可变量
+  @Input() tableSchm: NormalParamTableSchemtic;  //输入参数框架
+  @Input() paramDataSet:ParamDataSet; // 参数集
 
+  Schemtic = new Array<DataSchemtic>(); //实际参数框架
+  ConfRange = new Array<number>();
+
+  ConfHeads: Array<{ Name: string; Width: string }>;
 
   ngOnInit(): void {
-    this.updateEditCache();
+    this.SetColumNumber(this._confCount);
+    let SeqNo = 0;
+    for (const ParmName in this.tableSchm) {
+      if (this.tableSchm.hasOwnProperty(ParmName)) {
+        const element = this.tableSchm[ParmName];
+        this.Schemtic.push(Object.assign({ SeqNo, ParmName }, element));
+      }
+      SeqNo++;
+    }
+  }
+  SetColumNumber(confCount: number) {
+    this.ConfRange = [];
+    for (let i = 0; i < confCount; i++) {
+      this.ConfRange.push(i);
+    }
     
+  }
+  AddTrainConfCount()
+  {
+    if(this._confCount < 5)
+    {
+      
+      const Data = Object.assign({}, this.paramDataSet.paramSerial[this.ConfCount].Data)
+      this.ConfCount++;
+      this.paramDataSet.paramSerial.push({Name:`${this.ConfCount}`, Data}); 
+    }
+    else
+    {
+      alert("配置数已达到上限，无法再添加");
+    }
   }
 
   i = 1;
   editCache = {};
-  dataSet = [
-    {
-      key: '0',
-      name: 'Edward King 0',
-      age: '32',
-      address: 'London, Park Lane no. 0'
-    },
-    {
-      key: '1',
-      name: 'Edward King 1',
-      age: '32',
-      address: 'London, Park Lane no. 1'
-    }
-  ];
+  dataSet = [];
 
   addRow(): void {
     this.i++;

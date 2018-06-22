@@ -1,4 +1,4 @@
-
+/* 
       .editable-cell {
         position: relative;
       }
@@ -38,7 +38,8 @@
         color: #108ee9;
       }
 
-      .editable-add-btn {
-        margin-bottom: 8px;
-      }
-    
+
+     */
+     .editable-add-btn {
+      margin-bottom: 8px;
+    }
