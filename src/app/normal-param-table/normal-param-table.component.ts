@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { INormalParamEntry, NormalParamTableSchemtic, ParamDataSet } from "../data/TableSchemtic";
+import { NormalParamSchemtic, ParamDataSet, CommParamEntry } from '../Param/ParamTmpl';
 
-interface DataSchemtic extends INormalParamEntry {
+interface DataSchemtic extends CommParamEntry {
   SeqNo: number;
   ParmName: string;
 }
@@ -12,26 +12,28 @@ interface DataSchemtic extends INormalParamEntry {
   styleUrls: ['./normal-param-table.component.css']
 })
 export class NormalParamTableComponent implements OnInit {
-  private _confCount = 1;//配置数量，默认值为1
-  @Input()
+
+  AddTrainConfCTvisible: boolean;
   get ConfCount() {
-    return this._confCount;
-  };
+    return this.paramDataSet.paramSerial.length;
+  }
   set ConfCount(c) {
     this.SetColumNumber(c);
-    this._confCount = c;
   }
-  @Input() isMultiConfig = false; //配置数量是否可变量
-  @Input() tableSchm: NormalParamTableSchemtic;  //输入参数框架
-  @Input() paramDataSet:ParamDataSet; // 参数集
+  @Input() isMultiConfig = false; // 配置数量是否可变量
+  @Input() isMultiSource = false; // 是否是多来源的数据
+  @Input() tableSchm: NormalParamSchemtic;  // 输入参数框架
+  @Input() paramDataSet: ParamDataSet; // 参数集
+  @Input() serforInput = true;
 
-  Schemtic = new Array<DataSchemtic>(); //实际参数框架
+  Schemtic = new Array<DataSchemtic>(); // 用于显示的表格框架
   ConfRange = new Array<number>();
 
-  ConfHeads: Array<{ Name: string; Width: string }>;
+
+  // todo 采用独立的编辑缓存，仅在确认验证后更新到数据中
 
   ngOnInit(): void {
-    this.SetColumNumber(this._confCount);
+    this.SetColumNumber(this.paramDataSet.paramSerial.length);
     let SeqNo = 0;
     for (const ParmName in this.tableSchm) {
       if (this.tableSchm.hasOwnProperty(ParmName)) {
@@ -41,67 +43,29 @@ export class NormalParamTableComponent implements OnInit {
       SeqNo++;
     }
   }
+  // 设置列数目
   SetColumNumber(confCount: number) {
     this.ConfRange = [];
     for (let i = 0; i < confCount; i++) {
       this.ConfRange.push(i);
     }
-    
   }
-  AddTrainConfCount()
-  {
-    if(this._confCount < 5)
-    {
-      
-      const Data = Object.assign({}, this.paramDataSet.paramSerial[this.ConfCount].Data)
+
+  // 增加列车配置
+  AddTrainConfCount(confName: string) {
+    this.AddTrainConfCTvisible = false;
+    if (this.paramDataSet.paramSerial.length < 5) {
+      const Data = Object.assign({}, this.paramDataSet.paramSerial[this.ConfCount].Data);
       this.ConfCount++;
-      this.paramDataSet.paramSerial.push({Name:`${this.ConfCount}`, Data}); 
-    }
-    else
-    {
-      alert("配置数已达到上限，无法再添加");
+      this.paramDataSet.paramSerial.push({ Name: `${this.ConfCount}`, Data });
+    } else {
+      alert('配置数已达到上限，无法再添加');
     }
   }
 
-  i = 1;
-  editCache = {};
-  dataSet = [];
 
-  addRow(): void {
-    this.i++;
-    this.dataSet = [...this.dataSet, {
-      key: `${this.i}`,
-      name: `Edward King ${this.i}`,
-      age: '32',
-      address: `London, Park Lane no. ${this.i}`
-    }];
-    this.updateEditCache();
+  DeleteConfig(c) {
+    this.paramDataSet.paramSerial = this.paramDataSet.paramSerial.filter((v, i) => i !== c);
   }
-
-  deleteRow(i: string): void {
-    const dataSet = this.dataSet.filter(d => d.key !== i);
-    this.dataSet = dataSet;
-  }
-
-  startEdit(key: string): void {
-    this.editCache[key].edit = true;
-  }
-
-  finishEdit(key: string): void {
-    this.editCache[key].edit = false;
-    this.dataSet.find(item => item.key === key).name = this.editCache[key].name;
-  }
-
-  updateEditCache(): void {
-    this.dataSet.forEach(item => {
-      if (!this.editCache[item.key]) {
-        this.editCache[item.key] = {
-          edit: false,
-          name: item.name
-        };
-      }
-    });
-  }
-
 
 }

@@ -1,13 +1,23 @@
-<button ng-if="isMultiConfig" nz-button (click)="AddTrainConfCount()" class="editable-add-btn">
+<button *ngIf="isMultiConfig" nz-button class="editable-add-btn" nz-popover nzTitle="请输入配置的别名" [nzContent]="AddTrainConfCT"
+  nzTrigger="click" nzPlacement="right" [(nzVisible)]="AddTrainConfCTvisible">
   增加列车配置数目</button>
-<nz-table #ParamTable nzBordered [nzData]="Schemtic" nzSize="middle" [nzPageSize]="50">
+<ng-template #AddTrainConfCT>
+  <input nz-input placeholder="请输入别名,按回车确认" #configName (keyup.enter)=AddTrainConfCount(configName.value)>
+</ng-template>
+
+<nz-table #ParamTable nzBordered [nzData]="Schemtic" [nzPageSize]="50">
   <thead>
     <tr>
-      <th nzWidth="55px">序号</th>
+      <th nzWidth="60px">No</th>
       <th nzWidth="200px">参数</th>
       <th nzWidth="400px">描述</th>
-      <th nzWidth="60px">单位</th>
-      <th *ngFor="let c of ConfRange" nzWidth="90px">{{'配置值'+(isMultiConfig? c+1:"")}}</th>
+      <th nzWidth="70px">单位</th>
+      <th *ngFor="let c of ConfRange" nzWidth="100px">
+        <span nz-popover [nzTitle]="paramDataSet.paramSerial[c].Name" [nzContent]="ConfigCT">{{'配置值'+(ConfCount > 0? c+1:"")}} </span>
+        <ng-template #ConfigCT>
+          <a *ngIf="isMultiConfig" (click)='DeleteConfig(c)'>删除配置{{paramDataSet.paramSerial[c].Name}}</a>
+        </ng-template>
+      </th>
       <th>备注</th>
     </tr>
   </thead>
@@ -34,7 +44,7 @@
       <td>{{sch.Uint}}</td>
       <!-- <td *ngFor="let i of ConfRange">176000</td> -->
       <td *ngFor="let i of ConfRange">
-        <input [type]="sch.Scole.type" [max]="sch.Scole.max" [min]="sch.Scole.min" [step]="sch.Scole.step" nz-input [(ngModel)]="this.paramDataSet.paramSerial[i].Data[sch.ParmName]">
+        <input [type]="sch.Scole.type" [max]="sch.Scole.max" [min]="sch.Scole.min" [step]="sch.Scole.step" nz-input [(ngModel)]="paramDataSet.paramSerial[i].Data[sch.ParmName]">
       </td>
       <!-- <td>
             <nz-popconfirm [nzTitle]="'Sure to delete?'" (nzOnConfirm)="deleteRow(data.key)">

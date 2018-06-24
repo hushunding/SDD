@@ -43,3 +43,10 @@
      .editable-add-btn {
       margin-bottom: 8px;
     }
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+}
+    input[type="number"]{
+      text-align: right;
+    }
