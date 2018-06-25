@@ -39,23 +39,13 @@ export type ParamRemark = NormalParamTmpl<string>;                      // 参�
 /**
  * @description 参数集合,多种车型组成一个参数。
  */
-export interface ParamDataSet {
+export interface ParamDataSet<ParamT extends ParamValue> {
     paramSerial: Array<{
         Name: string;
-        Data: ParamValue;
+        Data: ParamT;
     }>;
     paramRemark: ParamRemark;
+    editing: boolean;
 }
 
-export function GetDefaultParamDataSetParam(sch: NormalParamSchemtic): ParamDataSet {
-    const paramRemark: ParamRemark = {};
-    const GA: ParamValue = {};
-    for (const key in sch) {
-        if (sch.hasOwnProperty(key)) {
-            const element = sch[key];
-            GA[key] = element.Default;
-            paramRemark[key] = '';
-        }
-    }
-    return { paramSerial: [{ Name: 'GA', Data: GA }], paramRemark };
-}
+

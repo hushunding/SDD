@@ -1,8 +1,8 @@
-import { VehicleSchemtic } from './Vehicle';
-import { EquipSchmtic } from './Equip';
-import { ProjectSchmetic } from './Project';
-import { ConfigSchematic } from './Config';
-import { NormalParamSchemtic, ParamDataSet } from './ParamTmpl';
+import { VehicleSchemtic, VehicleParam } from './Vehicle';
+import { EquipSchmtic, EquipParam } from './Equip';
+import { ProjectSchmetic, ProjectParam } from './Project';
+import { ConfigSchematic, ConfigParam } from './Config';
+import { NormalParamSchemtic, ParamDataSet, ParamValue, ParamRemark} from './ParamTmpl';
 
 interface ParamSetVersion {
     Macro: string;        // 整体版本，模板为SDD整体版本，数据为最终的版本
@@ -23,7 +23,7 @@ interface ParamSetTmpl<T> {
     // 输出-路由参数
     // 附录参数
 }
-export type ParamSet = ParamSetTmpl<ParamDataSet>;
+
 export type ParamSetSchemtic = ParamSetTmpl<NormalParamSchemtic>;
 
 export const schematic: ParamSetTmpl<NormalParamSchemtic> = {
@@ -39,3 +39,24 @@ export const schematic: ParamSetTmpl<NormalParamSchemtic> = {
     Project: ProjectSchmetic,   // 线路参数
     Config: ConfigSchematic     // 系统特性参数
 };
+
+export class ParamSet  {
+    Version = schematic.Version;
+    Vehicle = GetDefaultParamDataSet(VehicleParam);
+    Equip =  GetDefaultParamDataSet(EquipParam);
+    Project =  GetDefaultParamDataSet(ProjectParam);
+    Config = GetDefaultParamDataSet(ConfigParam);
+}
+
+export function GetDefaultParamDataSet<ParamT extends ParamValue>(c: { new(): ParamT; }): ParamDataSet<ParamT> {
+    const paramRemark: ParamRemark = {};
+    const GA = new c();
+    for (const key in GA) {
+        if (GA.hasOwnProperty(key)) {
+            const element = GA[key];
+            GA[key] = element;
+            paramRemark[key] = '';
+        }
+    }
+    return { paramSerial: [{ Name: 'GA', Data: GA }], paramRemark, editing: true };
+}
