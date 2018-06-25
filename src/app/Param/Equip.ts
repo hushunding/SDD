@@ -17,7 +17,7 @@ export interface EquipParmTmpl<T> extends NormalParamTmpl<T> {
     Equ_PsdRelayEnergDelay: T;
     Equ_PsdClsRelayRlsDelay: T;
 }
-export type EquipParam = EquipParmTmpl<number>;
+
 export type EquipParamSchemtic = EquipParmTmpl<NumberParamEntry>;
 
 export const EquipSchmtic: EquipParamSchemtic = {
@@ -97,3 +97,22 @@ export const EquipSchmtic: EquipParamSchemtic = {
         Default: 70
     },
 };
+
+export class EquipParam implements EquipParmTmpl<number> {
+    [key: string]: number;
+    Equ_RadarPulseDist = EquipSchmtic.Equ_RadarPulseDist.Default;
+    Equ_RadarTrigSpd = EquipSchmtic.Equ_RadarTrigSpd.Default;
+    Equ_RadarSpdDiff = EquipSchmtic.Equ_RadarSpdDiff.Default;
+    Equ_RadarCycle = EquipSchmtic.Equ_RadarCycle.Default;
+    Equ_CyclePulseCount = EquipSchmtic.Equ_CyclePulseCount.Default;
+    Equ_BeaconReadDiff = EquipSchmtic.Equ_BeaconReadDiff.Default;
+    Equ_AxleClearDelay = EquipSchmtic.Equ_AxleClearDelay.Default;
+    Equ_AxleOccupyDelay = EquipSchmtic.Equ_AxleOccupyDelay.Default;
+    Equ_PsdProcessDelay = EquipSchmtic.Equ_PsdProcessDelay.Default;
+    Equ_PsdWidth = EquipSchmtic.Equ_PsdWidth.Default;
+    Equ_BeaconWriteDelay = EquipSchmtic.Equ_BeaconWriteDelay.Default;
+    Equ_CollisionSpd = EquipSchmtic.Equ_CollisionSpd.Default;
+    Equ_LoopComDelay = EquipSchmtic.Equ_LoopComDelay.Default;
+    Equ_PsdRelayEnergDelay = EquipSchmtic.Equ_PsdRelayEnergDelay.Default;
+    Equ_PsdClsRelayRlsDelay = EquipSchmtic.Equ_PsdClsRelayRlsDelay.Default;
+}

@@ -1,4 +1,5 @@
 import { NormalParamTmpl, NumberParamEntry, TextParamEntry } from './ParamTmpl';
+import { markParentViewsForCheckProjectedViews } from '@angular/core/src/view/util';
 
 export interface ProjectParmTmpl<T1, T2> extends NormalParamTmpl<T1, T2> {
     Proj_MinVehicleLength: T1;
@@ -33,7 +34,7 @@ export interface ProjectParmTmpl<T1, T2> extends NormalParamTmpl<T1, T2> {
     Proj_ReverseTractCmd: T2;
 
 }
-export type ProjectParam = ProjectParmTmpl<number, string>;
+
 export type ProjectParamSchemtic = ProjectParmTmpl<NumberParamEntry, TextParamEntry>;
 export const ProjectSchmetic: ProjectParamSchemtic = {
     // todo 待更新Scole
@@ -194,3 +195,37 @@ export const ProjectSchmetic: ProjectParamSchemtic = {
         Default: 'true'
     },
 };
+
+export class ProjectParam implements ProjectParmTmpl<number, string> {
+    [key: string]: string | number;
+    Proj_MinVehicleLength = ProjectSchmetic.Proj_MinVehicleLength.Default;
+    Proj_MinHook2Roller = ProjectSchmetic.Proj_MinHook2Roller.Default;
+    Proj_PlatSpdLimit = ProjectSchmetic.Proj_PlatSpdLimit.Default;
+    Proj_MaxLineGrad = ProjectSchmetic.Proj_MaxLineGrad.Default;
+    Proj_MaxPlatGrad = ProjectSchmetic.Proj_MaxPlatGrad.Default;
+    Proj_Sp2AxleDist = ProjectSchmetic.Proj_Sp2AxleDist.Default;
+    Proj_LineSpdLimit = ProjectSchmetic.Proj_LineSpdLimit.Default;
+    Proj_BeaconFixDiff = ProjectSchmetic.Proj_BeaconFixDiff.Default;
+    Proj_Sig2AxleDist = ProjectSchmetic.Proj_Sig2AxleDist.Default;
+    Proj_MinSp2SigJumpDist = ProjectSchmetic.Proj_MinSp2SigJumpDist.Default;
+    Proj_MinSp2EndJumpDist = ProjectSchmetic.Proj_MinSp2EndJumpDist.Default;
+    Proj_MaxDistBcn2SpJump = ProjectSchmetic.Proj_MaxDistBcn2SpJump.Default;
+    Proj_MinSp2EndOpenDist = ProjectSchmetic.Proj_MinSp2EndOpenDist.Default;
+    Proj_MinSp2HookOpenDist = ProjectSchmetic.Proj_MinSp2HookOpenDist.Default;
+    Proj_MaxDistBcn2SpOpen = ProjectSchmetic.Proj_MaxDistBcn2SpOpen.Default;
+    Proj_MinDriverSpd = ProjectSchmetic.Proj_MinDriverSpd.Default;
+    Proj_RmMaxForwSpd = ProjectSchmetic.Proj_RmMaxForwSpd.Default;
+    Proj_RmMaxBackwSpd = ProjectSchmetic.Proj_RmMaxBackwSpd.Default;
+    Proj_EumMaxSpd = ProjectSchmetic.Proj_EumMaxSpd.Default;
+    Proj_MaxRollBackDist = ProjectSchmetic.Proj_MaxRollBackDist.Default;
+    Proj_HandOverCBIDelay = ProjectSchmetic.Proj_HandOverCBIDelay.Default;
+    Proj_HandOverZCDelay = ProjectSchmetic.Proj_HandOverZCDelay.Default;
+    Proj_Zc2CbiDelay = ProjectSchmetic.Proj_Zc2CbiDelay.Default;
+    Proj_Cbi2ZcDelay = ProjectSchmetic.Proj_Cbi2ZcDelay.Default;
+    Proj_Zc2CcDelay = ProjectSchmetic.Proj_Zc2CcDelay.Default;
+    Proj_Cc2ZcDelay = ProjectSchmetic.Proj_Cc2ZcDelay.Default;
+    Proj_Cbi2CcDelay = ProjectSchmetic.Proj_Cbi2CcDelay.Default;
+    Proj_Cc2CbiDelay = ProjectSchmetic.Proj_Cc2CbiDelay.Default;
+    Proj_IAtpCommMode = ProjectSchmetic.Proj_IAtpCommMode.Default;
+    Proj_ReverseTractCmd = ProjectSchmetic.Proj_ReverseTractCmd.Default;
+}

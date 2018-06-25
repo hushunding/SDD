@@ -1,4 +1,4 @@
-import {NormalParamTmpl, NumberParamEntry } from './ParamTmpl';
+import { NormalParamTmpl, NumberParamEntry } from './ParamTmpl';
 
 export interface VehicleParmTmpl<T> extends NormalParamTmpl<T> {
     Veh_Marshal: T;
@@ -24,7 +24,7 @@ export interface VehicleParmTmpl<T> extends NormalParamTmpl<T> {
     Veh_CollisionSpd: T;
 }
 
-export type VehicleParam = VehicleParmTmpl<number>;
+
 export type VehicleParamSchemtic = VehicleParmTmpl<NumberParamEntry>;
 
 export const VehicleSchemtic: VehicleParamSchemtic = {
@@ -135,4 +135,29 @@ export const VehicleSchemtic: VehicleParamSchemtic = {
     },
 
 };
+
+export class VehicleParam implements VehicleParmTmpl<number> {
+    [key: string]: number;
+    Veh_Marshal = VehicleSchemtic.Veh_Marshal.Default;
+    Veh_ConstructSpeed = VehicleSchemtic.Veh_ConstructSpeed.Default;
+    Veh_Length = VehicleSchemtic.Veh_Length.Default;
+    Veh_Hook2Roller = VehicleSchemtic.Veh_Hook2Roller.Default;
+    Veh_Hook2Ante = VehicleSchemtic.Veh_Hook2Ante.Default;
+    Veh_MaxAcc = VehicleSchemtic.Veh_MaxAcc.Default;
+    Veb_MaxDec = VehicleSchemtic.Veb_MaxDec.Default;
+    Veh_NormDec = VehicleSchemtic.Veh_NormDec.Default;
+    Veh_Gebr = VehicleSchemtic.Veh_Gebr.Default;
+    Veh_Fsbr = VehicleSchemtic.Veh_Fsbr.Default;
+    Veh_FsbTracCutDelay = VehicleSchemtic.Veh_FsbTracCutDelay.Default;
+    Veh_EbTracCutDelay = VehicleSchemtic.Veh_EbTracCutDelay.Default;
+    Veh_FsbSetDelay = VehicleSchemtic.Veh_FsbSetDelay.Default;
+    Veh_GebSetDelay = VehicleSchemtic.Veh_GebSetDelay.Default;
+    Veh_EbCoastTime = VehicleSchemtic.Veh_EbCoastTime.Default;
+    Veh_FsbCoastTime = VehicleSchemtic.Veh_FsbCoastTime.Default;
+    Veh_WheelSurfaceErr = VehicleSchemtic.Veh_WheelSurfaceErr.Default;
+    Veh_MaxWheelDiameter = VehicleSchemtic.Veh_MaxWheelDiameter.Default;
+    Veh_MinWheelDiameter = VehicleSchemtic.Veh_MinWheelDiameter.Default;
+    Veh_DoorWidth = VehicleSchemtic.Veh_DoorWidth.Default;
+    Veh_CollisionSpd = VehicleSchemtic.Veh_CollisionSpd.Default;
+}
 
