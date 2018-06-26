@@ -2,10 +2,10 @@ import { VehicleSchemtic, VehicleParam } from './Vehicle';
 import { EquipSchmtic, EquipParam } from './Equip';
 import { ProjectSchmetic, ProjectParam } from './Project';
 import { ConfigSchematic, ConfigParam } from './Config';
-import { NormalParamSchemtic, ParamDataSet, ParamValue, ParamRemark} from './ParamTmpl';
+import { NormalParamSchemtic, ParamDataSet, ParamValue, ParamRemark } from './ParamTmpl';
 
 interface ParamSetVersion {
-    Macro: string;        // 整体版本，模板为SDD整体版本，数据为最终的版本
+    Macro?: string;        // 整体版本，模板为SDD整体版本，数据为最终的版本
     Schemtic: string;     // 模板版本,VA.B.C ,A跟随整体版本，B表示破坏性变更，需要提供额外的参数和删除无效的参数，C表示公式变更，
     Input: string;        // 输入数据版本，
     ProjectName: string;  // 项目名称
@@ -30,7 +30,7 @@ export const schematic: ParamSetTmpl<NormalParamSchemtic> = {
     Version: {
         Macro: 'V2.4',
         Schemtic: 'V2.4.0',
-        Input: 'V0.1.0',            // 模板值
+        Input: 'V0.1.0',            // 默认值版本
         ProjectName: 'Schemtic',
         Log: [['V2.4', 'Excel转APP,之前的修订记录见原SDD']]
     },
@@ -40,12 +40,23 @@ export const schematic: ParamSetTmpl<NormalParamSchemtic> = {
     Config: ConfigSchematic     // 系统特性参数
 };
 
-export class ParamSet  {
-    Version = schematic.Version;
+export class ParamSet {
+    Version: ParamSetVersion;
     Vehicle = GetDefaultParamDataSet(VehicleParam);
-    Equip =  GetDefaultParamDataSet(EquipParam);
-    Project =  GetDefaultParamDataSet(ProjectParam);
+    Equip = GetDefaultParamDataSet(EquipParam);
+    Project = GetDefaultParamDataSet(ProjectParam);
     Config = GetDefaultParamDataSet(ConfigParam);
+
+    constructor(ProjectName: string) {
+        this.Version = {
+            Schemtic: schematic.Version.Schemtic,         // 依据模板版本，
+            Input: 'V0.1.0',                              // 初始版本值
+            ProjectName: ProjectName,
+            Log: [['V0.1.0', `根据${this.Version.Macro}模板创建`]],
+            LastModifyTime: new Date(Date.now())
+        };
+    }
+
 }
 
 export function GetDefaultParamDataSet<ParamT extends ParamValue>(c: { new(): ParamT; }): ParamDataSet<ParamT> {

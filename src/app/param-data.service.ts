@@ -8,6 +8,7 @@ export class ParamDataService {
 
   paramSet: ParamSet;
   needSave = false;
+  LoadNewData = true;
 
   /**
    * @description 从模板新建

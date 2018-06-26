@@ -13,6 +13,7 @@ import { MainRoutingModule } from './main.route';
 import { VehileParamTableComponent } from './vehile-param-table/vehile-param-table.component';
 import { EquPrjParamTableComponent } from './equ-prj-param-table/equ-prj-param-table.component';
 import { NormalParamTableComponent } from './normal-param-table/normal-param-table.component';
+import { NeworLoadDataComponent } from './newor-load-data/newor-load-data.component';
 
 registerLocaleData(zh);
 
@@ -22,7 +23,8 @@ registerLocaleData(zh);
     MainLayoutComponent,
     VehileParamTableComponent,
     EquPrjParamTableComponent,
-    NormalParamTableComponent
+    NormalParamTableComponent,
+    NeworLoadDataComponent
   ],
   imports: [
     BrowserModule,
