@@ -7,6 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NeworLoadDataComponent implements OnInit {
 
+  hfileList: Array<{
+    FileName: string;
+    Path: string
+  }> = [];
   constructor() { }
 
   ngOnInit() {

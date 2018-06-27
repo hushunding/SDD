@@ -1,3 +1,52 @@
-<p>
-  todo 改为历史列表和三行的加载按钮序列
-</p>
+<input type="file" #fileElem multiple accept=".sdd" style="display:none" (change)="(fileElem.value)">
+<input type="file" #exfileElem multiple accept=".xlsx" style="display:none" (change)="(exfileElem.value)">
+<nz-layout>
+  <nz-sider [nzWidth]="300" style="background:cornflowerblue">
+    <h1 class="sidetext">BiTRACON 800 SDD</h1>
+    <nz-list [nzDataSource]="hfileList" [nzHeader]="header" [nzFooter]="Footer" [nzRenderItem]="item">
+      <ng-template #header>
+        <h2 class="sidetext">历史使用的SDD工程文件</h2>
+      </ng-template>
+      <ng-template #Footer>
+        <h3 class="sidetext">
+          <i class="anticon anticon-folder-open"></i>
+          <a (click)="fileElem.click()" style="color: #ffffff; font-style:italic">打开其他SDD工程文件</a>
+        </h3>
+      </ng-template>
+      <ng-template #item let-item>
+        <nz-list-item>
+          <nz-list-item-meta [nzTitle]="nzTitle" [nzDescription]="nzDescription">
+            <ng-template #nzTitle>
+              <h3 class="sidetext">{{item.FileName}}</h3>
+            </ng-template>
+            <ng-template #nzDescription>
+              <h4 class="sidetext">{{item.Path}}</h4>
+            </ng-template>
+          </nz-list-item-meta>
+        </nz-list-item>
+      </ng-template>
+    </nz-list>
+  </nz-sider>
+  <nz-layout>
+    <nz-content style="margin: 32px 16px;">
+      <div nz-row >
+        <div nz-col [nzSpan]="6">
+          <nz-card nzHoverable style="width:240px" [nzCover]="coverTemplate1">
+            <nz-card-meta nzTitle="从模板新建" nzDescription="根据模板创建新的SDD文件"></nz-card-meta>
+          </nz-card>
+          <ng-template #coverTemplate1>
+            <img alt="" src="assets/tmpl.png" />
+          </ng-template>
+        </div>
+        <div nz-col [nzSpan]="6">
+          <nz-card nzHoverable style="width:240px" [nzCover]="coverTemplate2" (click)="exfileElem.click()">
+            <nz-card-meta nzTitle="从Excel导入" nzDescription="从旧Excel格式SDD文件升级为APP版本"></nz-card-meta>
+          </nz-card>
+          <ng-template #coverTemplate2>
+            <img alt="example" src="assets/excel.png" />
+          </ng-template>
+        </div>
+      </div>
+    </nz-content>
+  </nz-layout>
+</nz-layout>
