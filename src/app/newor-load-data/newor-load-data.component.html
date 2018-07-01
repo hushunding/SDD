@@ -1,5 +1,5 @@
-<input type="file" #fileElem multiple accept=".sdd" style="display:none" (change)="(fileElem.value)">
-<input type="file" #exfileElem multiple accept=".xlsx" style="display:none" (change)="(exfileElem.value)">
+<input type="file" #fileElem accept=".sdd" style="display:none" (change)="(fileElem.value)">
+<input nz-input type="file" #exfileElem accept=".xlsx" style="display:none" (change)="NewSDDFromExcel(modalTemplate, exfileElem)">
 <nz-layout>
   <nz-sider [nzWidth]="300" style="background:cornflowerblue">
     <h1 class="sidetext">BiTRACON 800 SDD</h1>
@@ -29,24 +29,42 @@
   </nz-sider>
   <nz-layout>
     <nz-content style="margin: 32px 16px;">
-      <div nz-row >
-        <div nz-col [nzSpan]="6">
-          <nz-card nzHoverable style="width:240px" [nzCover]="coverTemplate1">
-            <nz-card-meta nzTitle="从模板新建" nzDescription="根据模板创建新的SDD文件"></nz-card-meta>
+      <div style="display:flex;">
+        <div *ngFor="let way of NewSDDways">
+          <nz-card nzHoverable style="width:240px; margin-left: 16px;" [nzCover]="coverTemplate" (click)="NewSDD(way, modalTemplate, exfileElem)">
+            <nz-card-meta [nzTitle]="way.title" [nzDescription]="way.desc"></nz-card-meta>
           </nz-card>
-          <ng-template #coverTemplate1>
-            <img alt="" src="assets/tmpl.png" />
+          <ng-template #coverTemplate>
+            <img alt="" [src]="way.icon" />
           </ng-template>
-        </div>
-        <div nz-col [nzSpan]="6">
-          <nz-card nzHoverable style="width:240px" [nzCover]="coverTemplate2" (click)="exfileElem.click()">
-            <nz-card-meta nzTitle="从Excel导入" nzDescription="从旧Excel格式SDD文件升级为APP版本"></nz-card-meta>
-          </nz-card>
-          <ng-template #coverTemplate2>
-            <img alt="example" src="assets/excel.png" />
-          </ng-template>
+
         </div>
       </div>
+
     </nz-content>
   </nz-layout>
 </nz-layout>
+<ng-template #modalTemplate>
+  <form nz-form>
+    <nz-form-item *ngIf="isLoadFromExcel">
+      <nz-spin [nzSpinning]="isSpinning">
+        <nz-form-label [nzSpan]="6">excel文件</nz-form-label>
+        <nz-form-control [nzSpan]="14">
+          <nz-form-text>{{excelFile.name}}</nz-form-text>
+        </nz-form-control>
+      </nz-spin>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="6" nzFor="NewPrName">项目名称</nz-form-label>
+      <nz-form-control [nzSpan]="14">
+        <input nz-input [(ngModel)]="NewPrName" name="NewPrName" required [disabled]="isSpinning">
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="6" nzFor="NewPrjWD">工作目录</nz-form-label>
+      <nz-form-control [nzSpan]="14">
+        <input nz-input [(ngModel)]="NewPrjWD" name="NewPrjWD" required [disabled]="isSpinning">
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</ng-template>

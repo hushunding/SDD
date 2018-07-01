@@ -9,12 +9,19 @@ export class ParamDataService {
   paramSet: ParamSet;
   needSave = false;
   LoadNewData = true;
+  Workspace: string;
 
+  toLoadData() {
+    this.LoadNewData = true;
+  }
   /**
    * @description 从模板新建
    */
-  NewDataFromTmpl() {
-    this.needSave = true;
+  async NewDataFromTmpl(ProjectName: string) {
+
+    this.paramSet = new ParamSet(ProjectName);
+    this.needSave = false;
+    this.LoadNewData = false;
   }
 
   LoadDataFromExcel() {
@@ -26,5 +33,6 @@ export class ParamDataService {
   }
   constructor() {
     this.paramSet = null;
-   }
+    this.NewDataFromTmpl('GA').then();
+  }
 }

@@ -52,11 +52,10 @@ export class ParamSet {
             Schemtic: schematic.Version.Schemtic,         // 依据模板版本，
             Input: 'V0.1.0',                              // 初始版本值
             ProjectName: ProjectName,
-            Log: [['V0.1.0', `根据${this.Version.Macro}模板创建`]],
+            Log: [['V0.1.0', `根据${schematic.Version.Macro}模板创建`]],
             LastModifyTime: new Date(Date.now())
         };
     }
-
 }
 
 export function GetDefaultParamDataSet<ParamT extends ParamValue>(c: { new(): ParamT; }): ParamDataSet<ParamT> {
