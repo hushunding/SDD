@@ -11,9 +11,12 @@ import zh from '@angular/common/locales/zh';
 import { MainLayoutComponent } from './main-layout/main-layout.component';
 import { MainRoutingModule } from './main.route';
 import { VehileParamTableComponent } from './vehile-param-table/vehile-param-table.component';
-import { EquPrjParamTableComponent } from './equ-prj-param-table/equ-prj-param-table.component';
 import { NormalParamTableComponent } from './normal-param-table/normal-param-table.component';
 import { NeworLoadDataComponent } from './newor-load-data/newor-load-data.component';
+import { EquipParamTableComponent } from './equip-param-table/equip-param-table.component';
+import { ProjectParamTableComponent } from './project-param-table/project-param-table.component';
+import { ConfigParamTableComponent } from './config-param-table/config-param-table.component';
+import { MainToolbarComponent } from './main-toolbar/main-toolbar.component';
 
 registerLocaleData(zh);
 
@@ -22,9 +25,12 @@ registerLocaleData(zh);
     AppComponent,
     MainLayoutComponent,
     VehileParamTableComponent,
-    EquPrjParamTableComponent,
     NormalParamTableComponent,
-    NeworLoadDataComponent
+    NeworLoadDataComponent,
+    EquipParamTableComponent,
+    ProjectParamTableComponent,
+    ConfigParamTableComponent,
+    MainToolbarComponent
   ],
   imports: [
     BrowserModule,

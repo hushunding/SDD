@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EquPrjParamTableComponent } from './equ-prj-param-table.component';
+import { ConfigParamTableComponent } from './config-param-table.component';
 
-describe('EquPrjParamTableComponent', () => {
-  let component: EquPrjParamTableComponent;
-  let fixture: ComponentFixture<EquPrjParamTableComponent>;
+describe('ConfigParamTableComponent', () => {
+  let component: ConfigParamTableComponent;
+  let fixture: ComponentFixture<ConfigParamTableComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EquPrjParamTableComponent ]
+      declarations: [ ConfigParamTableComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EquPrjParamTableComponent);
+    fixture = TestBed.createComponent(ConfigParamTableComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -4,15 +4,8 @@
       <div nz-col nzSpan="4">
         <img class="logo" src="assets/unittec_log.svg">
       </div>
-      <div nz-col nzSpan="4">
-        <i class="anticon anticon-file-add"></i>
-        <button nz-button nz-dropdown nzAlign="bottom">a</button>
-      </div>
       <div nz-col nzSpan="8">
         <h1 style="text-align: center"> BiTRACON 800系统应用数据 </h1>
-      </div>
-      <div nz-col nzSpan="8">
-        <button nz-button>提交</button>
       </div>
     </div>
 
@@ -24,13 +17,9 @@
           <span title>
             <i class="anticon anticon-upload"></i>输入</span>
           <ul>
-            <li nz-menu-item>
-              <a routerLink='/vhl'>车辆参数</a>
+            <li nz-menu-item *ngFor="let route of InputOutLet">
+              <a [routerLink]="route.path">{{route.data.Name}}</a>
             </li>
-            <li nz-menu-item>
-              <a routerLink='/ep'>设备及线路参数</a>
-            </li>
-            <li nz-menu-item>系统基本参数</li>
           </ul>
         </li>
         <li nz-submenu [nzOpen]="true">
@@ -56,7 +45,8 @@
       </ul>
     </nz-sider>
     <nz-layout style="padding:0 6px 24px">
-      <nz-content style="background:#fff; padding: 24px; min-height: 280px;">
+      <app-main-toolbar></app-main-toolbar>
+      <nz-content style="background:#fff; padding: 10px; min-height: 280px;">
         <router-outlet></router-outlet>
       </nz-content>
     </nz-layout>

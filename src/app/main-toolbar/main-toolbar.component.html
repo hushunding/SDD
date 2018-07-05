@@ -1,0 +1,7 @@
+
+<button nz-button class="editable-add-btn" nz-popover nzTitle="请输入配置的别名" [nzContent]="AddTrainConfCT"
+  nzTrigger="click" nzPlacement="right" [(nzVisible)]="AddTrainConfCTvisible">
+  增加列车配置数目</button>
+<ng-template #AddTrainConfCT>
+  <input nz-input placeholder="请输入别名,按回车确认" #configName (keyup.enter)=AddTrainConfCount(configName.value)>
+</ng-template>
