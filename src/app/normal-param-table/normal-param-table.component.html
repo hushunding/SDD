@@ -1,6 +1,4 @@
-
-
-<nz-table #ParamTable nzBordered [nzData]="Schemtic" [nzPageSize]="50">
+<nz-table #ParamTable nzBordered [nzData]="Schemtic" [nzPageSize]="50" nzSize="middle">
   <thead>
     <tr>
       <th nzWidth="60px">No</th>
@@ -8,13 +6,13 @@
       <th nzWidth="400px">描述</th>
       <th nzWidth="70px">单位</th>
       <th *ngFor="let c of ConfRange; let i=index" ng-f nzWidth="100px">
-        <span nz-popover [nzTitle]="paramDataSet.paramSerial[i].Name" [nzContent]="ConfigCT">{{'配置值'+(ConfCount > 0? i+1:"")}} </span>
+        <span nz-popover [nzTitle]="paramDataSet.paramSerial[i].Name" [nzContent]="ConfigCT">{{'配置值'+(ConfCount > 1? i+1:"")}} </span>
         <ng-template #ConfigCT>
           <a *ngIf="isMultiConfig && ConfCount > 1" (click)='DeleteConfig(i)'>删除配置{{paramDataSet.paramSerial[i].Name}}</a>
         </ng-template>
       </th>
       <th nzWidth="150px">提供者</th>
-      <th>备注</th>
+      <th nz-tooltip="备注修改不影响版本">备注</th>
     </tr>
   </thead>
   <tbody>
@@ -38,13 +36,19 @@
       <td>{{sch.ParmName}}</td>
       <td>{{sch.Desc}}</td>
       <td>{{sch.Uint}}</td>
-      
+
       <!-- <td *ngFor="let i of ConfRange">176000</td> -->
       <td *ngFor="let c of ConfRange; let i=index">
-        <input [type]="sch.Scole.type" [max]="sch.Scole.max" [min]="sch.Scole.min" [step]="sch.Scole.step" nz-input [(ngModel)]="paramDataSet.paramSerial[i].Data[sch.ParmName]">
+        <nz-input-number *ngIf="sch.Scole.type === 'number' " [nzMax]="sch.Scole.max" [nzMin]="sch.Scole.min" [nzStep]="sch.Scole.step"
+          [(ngModel)]="paramDataSet.paramSerial[i].Data[sch.ParmName]" [nzDisabled]="!Editing">
+        </nz-input-number>
+        <nz-select *ngIf="sch.Scole.type === 'text'" [(ngModel)]="paramDataSet.paramSerial[i].Data[sch.ParmName]" [nzDisabled]="!Editing">
+          <nz-option *ngFor="let item of sch.Scole.valueset" [nzLabel]="item" [nzValue]="item">
+          </nz-option>
+        </nz-select>
       </td>
       <td>{{sch.Provider}}</td>
-      <textarea  nz-input [(ngModel)]="paramDataSet.paramRemark[sch.ParmName]" > </textarea>
+      <textarea nz-input [(ngModel)]="paramDataSet.paramRemark[sch.ParmName]"> </textarea>
       <!-- <td>
             <nz-popconfirm [nzTitle]="'Sure to delete?'" (nzOnConfirm)="deleteRow(data.key)">
               <a nz-popconfirm>Delete</a>

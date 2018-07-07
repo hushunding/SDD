@@ -48,3 +48,6 @@
     input[type="number"]{
       text-align: right;
     }
+    input:read-only{
+      background: #e4e2e2;
+    }

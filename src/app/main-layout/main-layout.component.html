@@ -1,13 +1,14 @@
-<nz-layout class="layout">
+<nz-layout class="layout" style="min-width: 1280px;">
   <nz-header style="background:whitesmoke">
-    <div nz-row>
-      <div nz-col nzSpan="4">
-        <img class="logo" src="assets/unittec_log.svg">
-      </div>
-      <div nz-col nzSpan="8">
-        <h1 style="text-align: center"> BiTRACON 800系统应用数据 </h1>
-      </div>
-    </div>
+    <nz-row nzType="flex" nzJustify="space-between" nzAlign="middle">
+      <img class="logo" src="assets/unittec_log.svg">
+      <h1 style="text-align: center"> BiTRACON 800系统应用数据 </h1>
+      <button nz-button >
+          <i class="anticon anticon-setting"></i>
+      </button>
+
+    </nz-row>
+
 
   </nz-header>
   <nz-layout>
@@ -46,7 +47,7 @@
     </nz-sider>
     <nz-layout style="padding:0 6px 24px">
       <app-main-toolbar></app-main-toolbar>
-      <nz-content style="background:#fff; padding: 10px; min-height: 280px;">
+      <nz-content style="background:#fff; padding: 10px; min-height: 280px; min-width: 800;">
         <router-outlet></router-outlet>
       </nz-content>
     </nz-layout>

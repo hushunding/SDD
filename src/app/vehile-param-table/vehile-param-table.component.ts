@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { schematic } from '../Param/ParamSet';
 import { ParamDataService } from '../param-data.service';
+import { ParamTableComponent } from '../param-table-component';
 
 
 @Component({
@@ -8,11 +9,18 @@ import { ParamDataService } from '../param-data.service';
   templateUrl: './vehile-param-table.component.html',
   styleUrls: ['./vehile-param-table.component.css']
 })
-export class VehileParamTableComponent implements OnInit {
+export class VehileParamTableComponent implements OnInit, ParamTableComponent {
+  ParamSchemtic = schematic.Vehicle;
+  get ParamDataSet() {
+    return this.paramdata.paramSet.Vehicle;
+  }
 
-  VhlTableSch = schematic.Vehicle;
+  get Editing() {
+    return this.paramdata.Editing;
+  }
 
-  constructor(public paramdata: ParamDataService) { }
+
+  constructor(private paramdata: ParamDataService) { }
 
   ngOnInit() {
   }

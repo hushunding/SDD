@@ -10,6 +10,7 @@ export class ParamDataService {
   needSave = false;
   LoadNewData = true;
   Workspace: string;
+  Editing = false;
 
   toLoadData() {
     this.LoadNewData = true;

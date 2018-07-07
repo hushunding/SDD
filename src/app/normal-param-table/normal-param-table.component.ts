@@ -22,7 +22,7 @@ export class NormalParamTableComponent implements OnInit {
   @Input() isMultiSource = false; // 是否是多来源的数据
   @Input() tableSchm: NormalParamSchemtic;  // 输入参数框架
   @Input() paramDataSet: ParamDataSet<ParamValue>; // 参数集
-  @Input() serforInput = true;
+  @Input() Editing = true;
 
   Schemtic = new Array<DataSchemtic>(); // 用于显示的表格框架
 

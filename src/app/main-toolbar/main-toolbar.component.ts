@@ -25,4 +25,11 @@ export class MainToolbarComponent implements OnInit {
       alert('配置数已达到上限，无法再添加');
     }
   }
+
+  SetEditing() {
+    this.paramDS.Editing = true;
+  }
+  CheckInput() {
+    this.paramDS.Editing = false;
+  }
 }
