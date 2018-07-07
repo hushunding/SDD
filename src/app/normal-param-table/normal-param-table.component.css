@@ -48,6 +48,6 @@
     input[type="number"]{
       text-align: right;
     }
-    input:read-only{
-      background: #e4e2e2;
+    input[disabled]{
+      color: rgba(0,0,0,.65);
     }
