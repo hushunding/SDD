@@ -34,6 +34,6 @@ export class ParamDataService {
   }
   constructor() {
     this.paramSet = null;
-    this.NewDataFromTmpl('GA').then();
+    // this.NewDataFromTmpl('GA').then();
   }
 }
