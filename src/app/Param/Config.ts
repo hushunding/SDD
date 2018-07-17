@@ -45,137 +45,149 @@ export const ConfigSchematic: ConfigParamSchemtic = {
     // todo 待更新Scole,将平台参数转为公式
     Conf_LocDiff: {
         Desc: '最大定位误差', Uint: 'm', Provider: '《城市轨道交通CBTC信号系统行业技术规范需求规范》',
-        Scole: { type: 'number', min: 0, max: 10000, step: 1 }, Default: 10
+        Comment: '', Scole: { type: 'number', min: 0, max: 10000, step: 1 }, Default: 10
     },
     Conf_MaxSlideBackDist: {
         Desc: '后溜安全检测距离', Uint: 'm', Provider: '系统默认配置',
-        Scole: { type: 'number', min: 0, max: 10000, step: 1 }, Default: 0.5
+        Comment: '', Scole: { type: 'number', min: 0, max: 10000, step: 1 }, Default: 0.5
     },
     Conf_ReleaseSpd: {
         Desc: '点式释放限速', Uint: 'km/h', Provider: '系统默认配置',
-        Scole: { type: 'number', min: 0, max: 10000, step: 1 }, Default: 15
+        Comment: '', Scole: { type: 'number', min: 0, max: 10000, step: 1 }, Default: 15
     },
     Conf_SafeMarginDist: {
         Desc: 'ATP安全距离阈量', Uint: 'm', Provider: '系统默认配置',
-        Scole: { type: 'number', min: 0, max: 10000, step: 1 }, Default: 5
+        Comment: '', Scole: { type: 'number', min: 0, max: 10000, step: 1 }, Default: 5
     },
     Conf_BilockCycle: {
         Desc: 'CBI子系统周期', Uint: 'ms', Provider: '系统默认配置',
-        Scole: { type: 'number', min: 0, max: 10000, step: 1 }, Default: 500
+        Comment: '', Scole: { type: 'number', min: 0, max: 10000, step: 1 }, Default: 500
     },
     Conf_BizcCycle: {
         Desc: 'ZC子系统周期', Uint: 'ms', Provider: '系统默认配置',
-        Scole: { type: 'number', min: 0, max: 10000, step: 1 }, Default: 500
+        Comment: '', Scole: { type: 'number', min: 0, max: 10000, step: 1 }, Default: 500
     },
     Conf_BiccCycle: {
         Desc: 'CC子系统周期', Uint: 'ms', Provider: '系统默认配置',
-        Scole: { type: 'number', min: 0, max: 10000, step: 1 }, Default: 150
+        Comment: '', Scole: { type: 'number', min: 0, max: 10000, step: 1 }, Default: 150
     },
     Conf_BiviewCycle: {
         Desc: 'ATS子系统心跳报文发送周期', Uint: 'ms', Provider: '系统内部接口规格书',
-        Scole: { type: 'number', min: 0, max: 10000, step: 1 }, Default: 500
+        Comment: '', Scole: { type: 'number', min: 0, max: 10000, step: 1 }, Default: 500
     },
     Conf_Cbi2ZcCycle: {
         Desc: 'CBI->ZC通信周期', Uint: 'ms', Provider: '系统内部接口规格书',
-        Scole: { type: 'number', min: 0, max: 10000, step: 1 }, Default: 500
+        Comment: '', Scole: { type: 'number', min: 0, max: 10000, step: 1 }, Default: 500
     },
     Conf_Zc2CbiCycle: {
         Desc: 'ZC->CBI通信周期', Uint: 'ms', Provider: '系统内部接口规格书',
-        Scole: { type: 'number', min: 0, max: 10000, step: 1 }, Default: 500
+        Comment: '', Scole: { type: 'number', min: 0, max: 10000, step: 1 }, Default: 500
     },
     Conf_Zc2CcCycle: {
         Desc: 'ZC->CC通信周期', Uint: 'ms', Provider: '系统内部接口规格书',
-        Scole: { type: 'number', min: 0, max: 10000, step: 1 }, Default: 500
+        Comment: '', Scole: { type: 'number', min: 0, max: 10000, step: 1 }, Default: 500
     },
     Conf_Cc2ZcCycle: {
         Desc: 'CC->ZC通信周期', Uint: 'ms', Provider: '系统内部接口规格书',
-        Scole: { type: 'number', min: 0, max: 10000, step: 1 }, Default: 300
+        Comment: '', Scole: { type: 'number', min: 0, max: 10000, step: 1 }, Default: 300
     },
     Conf_Cc2CbiCycle: {
         Desc: 'CC->CBI通信周期', Uint: 'ms', Provider: '系统内部接口规格书',
-        Scole: { type: 'number', min: 0, max: 10000, step: 1 }, Default: 150
+        Comment: '', Scole: { type: 'number', min: 0, max: 10000, step: 1 }, Default: 150
     },
     Conf_Cbi2CcCycle: {
         Desc: 'CBI->CC通信周期(使用通信环线时，通信周期为250)', Uint: 'ms', Provider: '系统内部接口规格书',
-        Scole: { type: 'number', min: 0, max: 10000, step: 1 }, Default: 500
+        Comment: '', Scole: { type: 'number', min: 0, max: 10000, step: 1 }, Default: 500
     },
     Conf_Cc2AtsCycle: {
         Desc: 'CC->ATS通信周期', Uint: 'ms', Provider: '系统内部接口规格书',
-        Scole: { type: 'number', min: 0, max: 10000, step: 1 }, Default: 300
+        Comment: '', Scole: { type: 'number', min: 0, max: 10000, step: 1 }, Default: 300
     },
     Conf_Zc2AtsCycle: {
         Desc: 'ZC->ATS通信周期', Uint: 'ms', Provider: '系统内部接口规格书',
-        Scole: { type: 'number', min: 0, max: 10000, step: 1 }, Default: 500
+        Comment: '', Scole: { type: 'number', min: 0, max: 10000, step: 1 }, Default: 500
     },
     Conf_Cbi2AtsCycle: {
         Desc: 'CBI->ATS通信周期', Uint: 'ms', Provider: '系统内部接口规格书',
-        Scole: { type: 'number', min: 0, max: 10000, step: 1 }, Default: 500
+        Comment: '', Scole: { type: 'number', min: 0, max: 10000, step: 1 }, Default: 500
     },
     Conf_Zc2ZcCycle: {
         Desc: 'ZC->ZC通信周期', Uint: 'ms', Provider: '系统内部接口规格书',
-        Scole: { type: 'number', min: 0, max: 10000, step: 1 }, Default: 500
+        Comment: '', Scole: { type: 'number', min: 0, max: 10000, step: 1 }, Default: 500
     },
     Conf_Cbi2CbiCycle: {
         Desc: 'CBI->CBI通信周期', Uint: 'ms', Provider: '系统内部接口规格书',
-        Scole: { type: 'number', min: 0, max: 10000, step: 1 }, Default: 500
+        Comment: '', Scole: { type: 'number', min: 0, max: 10000, step: 1 }, Default: 500
     },
     Conf_DcsDelay: {
         Desc: 'DCS网络传输延迟+节点恢复时间', Uint: 'ms', Provider: '系统内部接口规格书',
-        Scole: { type: 'number', min: 0, max: 10000, step: 1 }, Default: 200
+        Comment: '', Scole: { type: 'number', min: 0, max: 10000, step: 1 }, Default: 200
     },
     Conf_NetworkMargin: {
         Desc: '无线网络丢包宽恕', Uint: 'ms', Provider: '系统内部接口规格书',
-        Scole: { type: 'number', min: 0, max: 10000, step: 1 }, Default: 3000
+        Comment: '', Scole: { type: 'number', min: 0, max: 10000, step: 1 }, Default: 3000
     },
     Conf_VobOutTime_CC: {
         Desc: 'CC业务报文通过VOB板输出延时（含VC板和VOB板处理时间及SR6继电器释放时间）', Uint: 'ms', Provider: 'BiSTAR平台系统安全应用条件[BiSTAR_SRAC_31&38]',
-        Scole: { type: 'number', min: 0, max: 10000, step: 1 },
+        Comment: '', Scole: { type: 'number', min: 0, max: 10000, step: 1 }, Default: 177,
     },
     Conf_VibInTime_CC: {
         Desc: '外部报文通过VIB板到CC业务的延时（含VC板和VIB板处理时间）', Uint: 'ms', Provider: 'BiSTAR平台系统安全应用条件[BiSTAR_SRAC_38]',
-        Scole: { type: 'number', min: 0, max: 10000, step: 1 },
+        Comment: '', Scole: { type: 'number', min: 0, max: 10000, step: 1 }, Default: 430,
     },
     Conf_ComOutTime_CC: {
         Desc: 'CC业务报文通过COM板输出延时（含VC板和COM板处理时间）', Uint: 'ms', Provider: 'BiSTAR平台系统安全应用条件[BiSTAR_SRAC_33]',
-        Scole: { type: 'number', min: 0, max: 10000, step: 1 },
+        Comment: '', Scole: { type: 'number', min: 0, max: 10000, step: 1 }, Default: 250,
     },
     Conf_ComInTime_CC: {
         Desc: '外部报文通过COM板到CC业务的延时（含VC板和COM板处理时间）', Uint: 'ms', Provider: 'BiSTAR平台系统安全应用条件[BiSTAR_SRAC_33]',
-        Scole: { type: 'number', min: 0, max: 10000, step: 1 },
+        Comment: '', Scole: { type: 'number', min: 0, max: 10000, step: 1 }, Default: 400,
     },
     Conf_ComOutTime_ZC: {
         Desc: 'ZC业务报文通过COM板输出延时（含VC板和COM板处理时间）', Uint: 'ms', Provider: 'BiSTAR平台系统安全应用条件[BiSTAR_SRAC_33]',
-        Scole: { type: 'number', min: 0, max: 10000, step: 1 },
+        Comment: '', Scole: { type: 'number', min: 0, max: 10000, step: 1 }, Default: 600,
     },
     Conf_ComInTime_ZC: {
         Desc: '外部报文通过COM板到ZC业务的延时（含VC板和COM板处理时间）', Uint: 'ms', Provider: 'BiSTAR平台系统安全应用条件[BiSTAR_SRAC_33]',
-        Scole: { type: 'number', min: 0, max: 10000, step: 1 },
+        Comment: '', Scole: { type: 'number', min: 0, max: 10000, step: 1 }, Default: 1100,
     },
     Conf_VobOutTime_CBI: {
         Desc: 'CBI业务报文通过VOB板输出延时（含SR6继电器释放时间）', Uint: 'ms', Provider: 'BiSTAR平台系统安全应用条件[BiSTAR_SRAC_31&38]',
-        Scole: { type: 'number', min: 0, max: 10000, step: 1 }
+        Comment: '', Scole: { type: 'number', min: 0, max: 10000, step: 1 }, Default: 587,
     },
     Conf_VibInTime_CBI: {
         Desc: '外部报文通过VIB板到CBI业务的延时（含VC板和VIB板处理时间）', Uint: 'ms', Provider: 'BiSTAR平台系统安全应用条件[BiSTAR_SRAC_38]',
-        Scole: { type: 'number', min: 0, max: 10000, step: 1 },
+        Comment: '', Scole: { type: 'number', min: 0, max: 10000, step: 1 }, Default: 1130,
     },
     Conf_ComOutTime_CBI: {
         Desc: 'CBI业务报文通过COM板输出延时（含VC板和COM板处理时间）', Uint: 'ms', Provider: 'BiSTAR平台系统安全应用条件[BiSTAR_SRAC_33]',
-        Scole: { type: 'number', min: 0, max: 10000, step: 1 },
+        Comment: '', Scole: { type: 'number', min: 0, max: 10000, step: 1 }, Default: 600,
     },
     Conf_ComInTime_CBI: {
         Desc: '外部报文通过COM板到CBI业务的延时（含VC板和COM板处理时间）', Uint: 'ms', Provider: 'BiSTAR平台系统安全应用条件[BiSTAR_SRAC_33]',
-        Scole: { type: 'number', min: 0, max: 10000, step: 1 },
+        Comment: '', Scole: { type: 'number', min: 0, max: 10000, step: 1 }, Default: 1100,
     },
     Conf_PPUProcTime: {
         Desc: 'PPU板处理时间（供ATP采集）', Uint: 'ms', Provider: 'BiSTAR平台系统安全应用条件[BiSTAR_SRAC_34]',
-        Scole: { type: 'number', min: 0, max: 10000, step: 1 },
+        Comment: '', Scole: { type: 'number', min: 0, max: 10000, step: 1 }, Default: 150,
     },
     Conf_BtmSendDelay: {
         Desc: '列车经过信标到业务收到信标报文数据的最大延迟', Uint: 'ms', Provider: 'BiSTAR平台系统安全应用条件[BiSTAR_SRAC_34]',
-        Scole: { type: 'number', min: 0, max: 10000, step: 1 }, Default: 1000
+        Comment: '', Scole: { type: 'number', min: 0, max: 10000, step: 1 }, Default: 1000
     },
 };
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 export class ConfigParam implements ConfigParmTmpl<number> {

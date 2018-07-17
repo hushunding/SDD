@@ -3,6 +3,7 @@ import { EquipSchmtic, EquipParam } from './Equip';
 import { ProjectSchmetic, ProjectParam } from './Project';
 import { ConfigSchematic, ConfigParam } from './Config';
 import { NormalParamSchemtic, ParamDataSet, ParamValue, ParamRemark } from './ParamTmpl';
+import { SysCommSchemtic, SysCommParam } from './SysComm';
 
 interface ParamSetVersion {
     Macro?: string;        // 整体版本，模板为SDD整体版本，数据为最终的版本
@@ -19,7 +20,7 @@ interface ParamSetTmpl<T> {
     Equip: T;       // 设备参数
     Project: T;     // 线路参数
     Config: T;      // 系统特性参数
-    // 输出-一般参数
+    SysComm: T;  // 输出-一般参数
     // 输出-路由参数
     // 附录参数
 }
@@ -37,15 +38,17 @@ export const schematic: ParamSetTmpl<NormalParamSchemtic> = {
     Vehicle: VehicleSchemtic,   // 车辆参数
     Equip: EquipSchmtic,        // 设备参数
     Project: ProjectSchmetic,   // 线路参数
-    Config: ConfigSchematic     // 系统特性参数
+    Config: ConfigSchematic,     // 系统特性参数
+    SysComm: SysCommSchemtic     // 输出-通用参数
 };
 
 export class ParamSet {
     Version: ParamSetVersion;
-    Vehicle = GetDefaultParamDataSet(VehicleParam);
-    Equip = GetDefaultParamDataSet(EquipParam);
-    Project = GetDefaultParamDataSet(ProjectParam);
-    Config = GetDefaultParamDataSet(ConfigParam);
+    Vehicle = GetDefaultParamDataSet(new VehicleParam(), schematic.Vehicle);
+    Equip = GetDefaultParamDataSet(new EquipParam(), schematic.Equip);
+    Project = GetDefaultParamDataSet(new ProjectParam(), schematic.Project);
+    Config = GetDefaultParamDataSet(new ConfigParam(), schematic.Config);
+    SysComm = GetDefaultParamDataSet(this.NewSysComm(0), schematic.SysComm);
 
     constructor(ProjectName: string) {
         this.Version = {
@@ -56,16 +59,20 @@ export class ParamSet {
             LastModifyTime: new Date(Date.now())
         };
     }
+    NewSysComm(index: number) {
+        return new SysCommParam(
+            this.Vehicle.paramSerial[index].Data,
+            this.Equip.paramSerial[0].Data,
+            this.Project.paramSerial[0].Data,
+            this.Config.paramSerial[0].Data);
+    }
 }
 
-export function GetDefaultParamDataSet<ParamT extends ParamValue>(c: { new(): ParamT; }): ParamDataSet<ParamT> {
+export function GetDefaultParamDataSet<ParamT extends ParamValue>(GA: ParamT, tmpl: NormalParamSchemtic): ParamDataSet<ParamT> {
     const paramRemark: ParamRemark = {};
-    const GA = new c();
-    for (const key in GA) {
-        if (GA.hasOwnProperty(key)) {
-            const element = GA[key];
-            GA[key] = element;
-            paramRemark[key] = '';
+    for (const key in tmpl) {
+        if (tmpl.hasOwnProperty(key)) {
+            paramRemark[key] = tmpl[key].Comment;
         }
     }
     return { paramSerial: [{ Name: 'GA', Data: GA }], paramRemark, editing: true };

@@ -16,6 +16,7 @@ export interface INormalParamEntry<vT, sT> {
     Provider: string;
     Scole: sT;
     Default?: vT;
+    Comment: string;
 }
 
 /**
