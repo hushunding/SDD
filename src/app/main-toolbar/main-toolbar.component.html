@@ -13,12 +13,21 @@
   </nz-row>
 
 
-
-  <button [disabled]="!paramDS.Editing" nz-button nz-popover nzTitle="请输入配置的别名" [nzContent]="AddTrainConfCT" nzTrigger="click" nzPlacement="right" [(nzVisible)]="AddTrainConfCTvisible">
+<nz-row nzType="flex" nzJustify="start" nzAlign="top">
+  <button [disabled]="!paramDS.Editing || !CanAddConf" nz-button nz-popover nzTitle="请输入配置的别名" [nzContent]="AddTrainConfCT" nzTrigger="click" nzPlacement="right" [(nzVisible)]="AddTrainConfCTvisible">
     增加列车配置数目</button>
   <ng-template #AddTrainConfCT>
     <input nz-input placeholder="请输入别名,按回车确认" #configName (keyup.enter)=AddTrainConfCount(configName.value)>
   </ng-template>
+  <button [disabled]="!paramDS.Editing || !CanDelConf" nz-button nz-popover nzTitle="选择删除的配置" [nzContent]="DelTrainConfCT" nzTrigger="click" nzPlacement="right" [(nzVisible)]="DelTrainConfCTvisible">
+    删除列车配置数目</button>
+  <ng-template #DelTrainConfCT>
+      <nz-checkbox-group [(ngModel)]="ConfList" #delList></nz-checkbox-group>
+      <br>
+      <button (click)="DelTrainConf()" nz-button nzType="primary">删除选择的配置</button>
+  </ng-template>
+</nz-row>
+
   <nz-row nzType="flex" nzJustify="end">
     <button nz-button (click)="SetEditing()">
       <i class="anticon anticon-edit"></i>编辑</button>

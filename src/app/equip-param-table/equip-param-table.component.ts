@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { schematic } from '../Param/ParamSet';
+import { ParamSetSchematic } from '../Param/ParamSet';
 import { ParamDataService } from '../param-data.service';
 import { ParamTableComponent } from '../param-table-component';
 
@@ -10,7 +10,7 @@ import { ParamTableComponent } from '../param-table-component';
 })
 export class EquipParamTableComponent implements OnInit, ParamTableComponent {
 
-  ParamSchemtic = schematic.Equip;
+  ParamSchemtic = ParamSetSchematic.Equip;
   get ParamDataSet() {
     return this.paramdata.paramSet.Equip;
   }

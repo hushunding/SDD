@@ -1,7 +1,7 @@
 import { TestBed, inject, async } from '@angular/core/testing';
 
 import { ParamDataService } from './param-data.service';
-import { schematic, ParamSet } from './Param/ParamSet';
+import { ParamSetSchematic, ParamSet } from './Param/ParamSet';
 import { NormalParamSchemtic, ParamDataSet, ParamValue } from './Param/ParamTmpl';
 
 describe('ParamDataService', () => {
@@ -31,10 +31,10 @@ describe('ParamDataService', () => {
       });
     }));
 
-    const ParamSetNames = ['Vehicle', 'Equip', 'Project', 'Config'];
+    const ParamSetNames = ['Vehicle', 'Equip', 'Project', 'Config', 'SysComm'];
     for (const psn of ParamSetNames) {
       it(psn, () => {
-        const paramsch: NormalParamSchemtic = schematic[psn];
+        const paramsch: NormalParamSchemtic = ParamSetSchematic[psn];
         const paramdat: ParamValue = paramSet[psn].paramSerial[0].Data;
 
         for (const key in paramsch) {

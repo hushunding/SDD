@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ParamTableComponent } from '../param-table-component';
-import { schematic } from '../Param/ParamSet';
+import { ParamSetSchematic } from '../Param/ParamSet';
 import { ParamDataService } from '../param-data.service';
 
 @Component({
@@ -9,7 +9,7 @@ import { ParamDataService } from '../param-data.service';
   styleUrls: ['./config-param-table.component.css']
 })
 export class ConfigParamTableComponent implements OnInit, ParamTableComponent {
-  ParamSchemtic = schematic.Config;
+  ParamSchemtic = ParamSetSchematic.Config;
   get ParamDataSet() {
     return this.paramdata.paramSet.Config;
   }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { appInputRoutes } from '../main.route';
+import { appInputRoutes, appOutRoutes } from '../main.route';
 
 @Component({
   selector: 'main-layout',
@@ -8,4 +8,5 @@ import { appInputRoutes } from '../main.route';
 })
 export class MainLayoutComponent {
   InputOutLet = appInputRoutes;
+  OutputOutlet = appOutRoutes;
 }

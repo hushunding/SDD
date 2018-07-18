@@ -4,14 +4,15 @@ import { ParamSetSchematic } from '../Param/ParamSet';
 import { ParamDataService } from '../param-data.service';
 
 @Component({
-  selector: 'app-project-param-table',
-  templateUrl: './project-param-table.component.html',
-  styleUrls: ['./project-param-table.component.css']
+  selector: 'app-sys-comm-param-table',
+  templateUrl: './sys-comm-param-table.component.html',
+  styleUrls: ['./sys-comm-param-table.component.css']
 })
-export class ProjectParamTableComponent implements OnInit, ParamTableComponent {
-  ParamSchemtic = ParamSetSchematic.Project;
+export class SysCommParamTableComponent implements OnInit , ParamTableComponent {
+
+  ParamSchemtic = ParamSetSchematic.SysComm;
   get ParamDataSet() {
-    return this.paramdata.paramSet.Project;
+    return this.paramdata.paramSet.SysComm;
   }
 
   get Editing() {

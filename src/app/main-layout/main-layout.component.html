@@ -26,12 +26,11 @@
         <li nz-submenu [nzOpen]="true">
           <span title>
             <i class="anticon anticon-download"></i>输出</span>
-          <ul>
-            <li nz-menu-item>option5</li>
-            <li nz-menu-item>option6</li>
-            <li nz-menu-item>option7</li>
-            <li nz-menu-item>option8</li>
-          </ul>
+            <ul>
+              <li nz-menu-item *ngFor="let route of OutputOutlet">
+                <a [routerLink]="route.path">{{route.data.Name}}</a>
+              </li>
+            </ul>
         </li>
         <li nz-submenu [nzOpen]="true">
           <span title>

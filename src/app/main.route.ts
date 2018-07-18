@@ -4,16 +4,21 @@ import { VehileParamTableComponent } from './vehile-param-table/vehile-param-tab
 import { EquipParamTableComponent } from './equip-param-table/equip-param-table.component';
 import { ProjectParamTableComponent } from './project-param-table/project-param-table.component';
 import { ConfigParamTableComponent } from './config-param-table/config-param-table.component';
+import { SysCommParamTableComponent } from './sys-comm-param-table/sys-comm-param-table.component';
 
 const appDefaultRout: Route = { path: '', redirectTo: 'vhl', pathMatch: 'full' };
 export const appInputRoutes: Routes = [
   { path: 'vhl', component: VehileParamTableComponent, data: { Name: '车辆参数' } },
-  { path: 'eq', component: EquipParamTableComponent, data: { Name: '设备参数' }},
-  { path: 'prj', component: ProjectParamTableComponent, data: { Name: '线路参数' }},
-  { path: 'cnf', component: ConfigParamTableComponent, data: { Name: '系统基本参数' }},
+  { path: 'eq', component: EquipParamTableComponent, data: { Name: '设备参数' } },
+  { path: 'prj', component: ProjectParamTableComponent, data: { Name: '线路参数' } },
+  { path: 'cnf', component: ConfigParamTableComponent, data: { Name: '系统基本参数' } },
 ];
 
-const appRoutes: Routes = [appDefaultRout, ...appInputRoutes];
+export const appOutRoutes: Routes = [
+  { path: 'sys', component: SysCommParamTableComponent, data: { Name: '系统通用参数' } }
+];
+
+const appRoutes: Routes = [appDefaultRout, ...appInputRoutes, ...appOutRoutes];
 
 @NgModule({
   imports: [

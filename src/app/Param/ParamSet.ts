@@ -27,7 +27,7 @@ interface ParamSetTmpl<T> {
 
 export type ParamSetSchemtic = ParamSetTmpl<NormalParamSchemtic>;
 
-export const schematic: ParamSetTmpl<NormalParamSchemtic> = {
+export const ParamSetSchematic: ParamSetTmpl<NormalParamSchemtic> = {
     Version: {
         Macro: 'V2.4',
         Schemtic: 'V2.4.0',
@@ -44,27 +44,43 @@ export const schematic: ParamSetTmpl<NormalParamSchemtic> = {
 
 export class ParamSet {
     Version: ParamSetVersion;
-    Vehicle = GetDefaultParamDataSet(new VehicleParam(), schematic.Vehicle);
-    Equip = GetDefaultParamDataSet(new EquipParam(), schematic.Equip);
-    Project = GetDefaultParamDataSet(new ProjectParam(), schematic.Project);
-    Config = GetDefaultParamDataSet(new ConfigParam(), schematic.Config);
-    SysComm = GetDefaultParamDataSet(this.NewSysComm(0), schematic.SysComm);
+    Vehicle = GetDefaultParamDataSet(new VehicleParam(), ParamSetSchematic.Vehicle);
+    Equip = GetDefaultParamDataSet(new EquipParam(), ParamSetSchematic.Equip);
+    Project = GetDefaultParamDataSet(new ProjectParam(), ParamSetSchematic.Project);
+    Config = GetDefaultParamDataSet(new ConfigParam(), ParamSetSchematic.Config);
+    SysComm = GetDefaultParamDataSet(this.NewSysComm(), ParamSetSchematic.SysComm);
 
     constructor(ProjectName: string) {
         this.Version = {
-            Schemtic: schematic.Version.Schemtic,         // 依据模板版本，
+            Schemtic: ParamSetSchematic.Version.Schemtic,         // 依据模板版本，
             Input: 'V0.1.0',                              // 初始版本值
             ProjectName: ProjectName,
-            Log: [['V0.1.0', `根据${schematic.Version.Macro}模板创建`]],
+            Log: [['V0.1.0', `根据${ParamSetSchematic.Version.Macro}模板创建`]],
             LastModifyTime: new Date(Date.now())
         };
     }
-    NewSysComm(index: number) {
+    private NewSysComm() {
+        const index = this.Vehicle.paramSerial.length - 1;
         return new SysCommParam(
             this.Vehicle.paramSerial[index].Data,
             this.Equip.paramSerial[0].Data,
             this.Project.paramSerial[0].Data,
             this.Config.paramSerial[0].Data);
+    }
+    AddTrainConfCount(confName: string) {
+        if (!this.Vehicle.paramSerial.some((s) => s.Name === confName)) {
+            const Data = new VehicleParam();
+            this.Vehicle.paramSerial.push({ Name: confName, Data });
+            this.SysComm.paramSerial.push({ Name: confName, Data: this.NewSysComm() });
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+    DeleteConfig(confName: string) {
+        this.Vehicle.paramSerial = this.Vehicle.paramSerial.filter((v) => v.Name !== confName);
+        this.SysComm.paramSerial = this.SysComm.paramSerial.filter((v) => v.Name !== confName);
     }
 }
 
@@ -75,5 +91,5 @@ export function GetDefaultParamDataSet<ParamT extends ParamValue>(GA: ParamT, tm
             paramRemark[key] = tmpl[key].Comment;
         }
     }
-    return { paramSerial: [{ Name: 'GA', Data: GA }], paramRemark, editing: true };
+    return { paramSerial: [{ Name: '默认', Data: GA }], paramRemark, editing: true };
 }
