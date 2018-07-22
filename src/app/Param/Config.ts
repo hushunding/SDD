@@ -42,7 +42,7 @@ export type ConfigParamSchemtic = ConfigParmTmpl<NumberParamEntry>;
 
 export const ConfigSchematic: ConfigParamSchemtic = {
 
-    // todo 待更新Scole,将平台参数转为公式
+    // todo 待更新Scole
     Conf_LocDiff: {
         Desc: '最大定位误差', Uint: 'm', Provider: '《城市轨道交通CBTC信号系统行业技术规范需求规范》',
         Comment: '', Scole: { type: 'number', min: 0, max: 10000, step: 1 }, Default: 10

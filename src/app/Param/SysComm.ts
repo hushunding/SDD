@@ -56,6 +56,7 @@ export interface SysCommParmTmpl<T1, T2> extends NormalParamTmpl<T1, T2> {
 export type SysCommParamSchemtic = SysCommParmTmpl<NumberParamEntry, TextParamEntry>;
 
 export const SysCommSchemtic: SysCommParamSchemtic = {
+    // todo 待更新Scole
     CFG_T_CBI_ALIVE_TO_ZC: {
         Desc: 'ZC检测CBI周期报文通信超时的宽恕时间', Uint: 'ms', Provider: '',
         Scole: { type: 'number', min: 0, max: 10000, step: 1 }, Default: 3000, Comment: ''
@@ -248,6 +249,7 @@ export class SysCommParam implements SysCommParmTmpl<number, string> {
     constructor(private vhl: VehicleParam, private equ: EquipParam, private prj: ProjectParam, private cnf: ConfigParam) {
 
     }
+    // todo 待更新公式
     get CFG_T_CBI_ALIVE_TO_ZC() { return -1; }
     get CFG_T_ZC_ALIVE_TO_CBI() { return -1; }
     get CFG_T_ZC_ALIVE_TO_CC() { return -1; }
