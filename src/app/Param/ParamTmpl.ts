@@ -47,6 +47,7 @@ export interface ParamDataSet<ParamT extends ParamValue> {
     }>;
     paramRemark: ParamRemark;
     editing: boolean;
+    GetData: (index: number) => ParamT;
 }
 
 

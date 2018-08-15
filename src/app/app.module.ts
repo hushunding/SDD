@@ -18,6 +18,7 @@ import { ProjectParamTableComponent } from './project-param-table/project-param-
 import { ConfigParamTableComponent } from './config-param-table/config-param-table.component';
 import { MainToolbarComponent } from './main-toolbar/main-toolbar.component';
 import { SysCommParamTableComponent } from './sys-comm-param-table/sys-comm-param-table.component';
+import { RouteParamTableComponent } from './route-param-table/route-param-table.component';
 
 registerLocaleData(zh);
 
@@ -32,7 +33,8 @@ registerLocaleData(zh);
     ProjectParamTableComponent,
     ConfigParamTableComponent,
     MainToolbarComponent,
-    SysCommParamTableComponent
+    SysCommParamTableComponent,
+    RouteParamTableComponent
   ],
   imports: [
     BrowserModule,

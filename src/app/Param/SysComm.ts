@@ -249,6 +249,15 @@ export class SysCommParam implements SysCommParmTmpl<number, string> {
     constructor(private vhl: VehicleParam, private equ: EquipParam, private prj: ProjectParam, private cnf: ConfigParam) {
 
     }
+    GetInputSet() {
+        return {
+            vhl: this.vhl,
+            equ: this.equ,
+            prj: this.prj,
+            cnf: this.cnf,
+            com: this
+        };
+    }
     // todo 待更新公式
     get CFG_T_CBI_ALIVE_TO_ZC() { return -1; }
     get CFG_T_ZC_ALIVE_TO_CBI() { return -1; }

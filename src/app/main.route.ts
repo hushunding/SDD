@@ -5,6 +5,7 @@ import { EquipParamTableComponent } from './equip-param-table/equip-param-table.
 import { ProjectParamTableComponent } from './project-param-table/project-param-table.component';
 import { ConfigParamTableComponent } from './config-param-table/config-param-table.component';
 import { SysCommParamTableComponent } from './sys-comm-param-table/sys-comm-param-table.component';
+import { RouteParamTableComponent } from './route-param-table/route-param-table.component';
 
 const appDefaultRout: Route = { path: '', redirectTo: 'vhl', pathMatch: 'full' };
 export const appInputRoutes: Routes = [
@@ -15,7 +16,9 @@ export const appInputRoutes: Routes = [
 ];
 
 export const appOutRoutes: Routes = [
-  { path: 'sys', component: SysCommParamTableComponent, data: { Name: '系统通用参数' } }
+  { path: 'sys', component: SysCommParamTableComponent, data: { Name: '系统通用参数' } },
+  { path: 'route1', component: RouteParamTableComponent, data: { Name: '系统进路参数' } },
+  { path: 'route2', component: RouteParamTableComponent, data: { Name: '系统进路参数' } }
 ];
 
 const appRoutes: Routes = [appDefaultRout, ...appInputRoutes, ...appOutRoutes];

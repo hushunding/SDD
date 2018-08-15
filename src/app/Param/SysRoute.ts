@@ -4,6 +4,7 @@ import { EquipParam } from './Equip';
 import { ProjectParam } from './Project';
 import { ConfigParam } from './Config';
 import { SingalNameSet, CBINameSet, BcnNameSet, SectionNameSet, BoolTextSet } from './DevSet';
+import { SysCommParam } from './SysComm';
 
 export interface SysRouteParmTmpl<T1, T2> extends NormalParamTmpl<T1, T2> {
     CBI_UID: T2;
@@ -193,7 +194,7 @@ export class SysRouteParam implements SysRouteParmTmpl<number, string> {
     get CFG_T_YDROUTE_RELEASE() { return -1; }
     [key: string]: string | number | any;
 
-    constructor(private vhl: VehicleParam, private equ: EquipParam, private prj: ProjectParam, private cnf: ConfigParam) {
+    constructor(private vhl: VehicleParam, private equ: EquipParam, private prj: ProjectParam, private cnf: ConfigParam, private com: SysCommParam) {
 
     }
 

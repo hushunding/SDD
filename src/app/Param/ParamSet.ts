@@ -4,6 +4,7 @@ import { ProjectSchmetic, ProjectParam } from './Project';
 import { ConfigSchematic, ConfigParam } from './Config';
 import { NormalParamSchemtic, ParamDataSet, ParamValue, ParamRemark } from './ParamTmpl';
 import { SysCommSchemtic, SysCommParam } from './SysComm';
+import { SysRouteSchemtic } from './SysRoute';
 
 interface ParamSetVersion {
     Macro?: string;        // 整体版本，模板为SDD整体版本，数据为最终的版本
@@ -21,7 +22,7 @@ interface ParamSetTmpl<T> {
     Project: T;     // 线路参数
     Config: T;      // 系统特性参数
     SysComm: T;  // 输出-一般参数
-    // 输出-路由参数
+    SysRoute: T;    // 输出-路由参数
     // 附录参数
 }
 
@@ -39,7 +40,8 @@ export const ParamSetSchematic: ParamSetTmpl<NormalParamSchemtic> = {
     Equip: EquipSchmtic,        // 设备参数
     Project: ProjectSchmetic,   // 线路参数
     Config: ConfigSchematic,     // 系统特性参数
-    SysComm: SysCommSchemtic     // 输出-通用参数
+    SysComm: SysCommSchemtic,     // 输出-通用参数
+    SysRoute: SysRouteSchemtic      // 输出-进路参数
 };
 
 export class ParamSet {
@@ -62,10 +64,10 @@ export class ParamSet {
     private NewSysComm() {
         const index = this.Vehicle.paramSerial.length - 1;
         return new SysCommParam(
-            this.Vehicle.paramSerial[index].Data,
-            this.Equip.paramSerial[0].Data,
-            this.Project.paramSerial[0].Data,
-            this.Config.paramSerial[0].Data);
+            this.Vehicle.GetData(index),
+            this.Equip.GetData(0),
+            this.Project.GetData(0),
+            this.Config.GetData(0));
     }
     AddTrainConfCount(confName: string) {
         if (!this.Vehicle.paramSerial.some((s) => s.Name === confName)) {
@@ -91,5 +93,8 @@ export function GetDefaultParamDataSet<ParamT extends ParamValue>(GA: ParamT, tm
             paramRemark[key] = tmpl[key].Comment;
         }
     }
-    return { paramSerial: [{ Name: '默认', Data: GA }], paramRemark, editing: true };
+    const GetData = function (i) { return this.paramSerial[i].Data; };
+    const paramset = { paramSerial: [{ Name: '默认', Data: GA }], paramRemark, editing: true, GetData};
+    paramset.GetData = GetData.bind(paramset);
+    return paramset;
 }

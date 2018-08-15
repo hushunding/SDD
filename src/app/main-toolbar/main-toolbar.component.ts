@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ParamDataService } from '../param-data.service';
 import { VehicleParam } from '../Param/Vehicle';
-import { NzCheckBoxOptionInterface } from '../../../node_modules/ng-zorro-antd';
+import { NzCheckBoxOptionInterface } from 'ng-zorro-antd';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-main-toolbar',
@@ -25,7 +26,12 @@ export class MainToolbarComponent implements OnInit {
     this._DelTrainConfCTvisible = value;
   }
 
-  constructor(private paramDS: ParamDataService) { }
+  constructor(private paramDS: ParamDataService, private route: ActivatedRoute,
+    private router: Router) {
+    this.router.events.subscribe((v) => {
+      console.log(v);
+    });
+  }
 
   ngOnInit() {
   }
