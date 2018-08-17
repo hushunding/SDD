@@ -19,6 +19,7 @@ import { ConfigParamTableComponent } from './config-param-table/config-param-tab
 import { MainToolbarComponent } from './main-toolbar/main-toolbar.component';
 import { SysCommParamTableComponent } from './sys-comm-param-table/sys-comm-param-table.component';
 import { RouteParamTableComponent } from './route-param-table/route-param-table.component';
+import { ComRouteParamTableComponent } from './com-route-param-table/com-route-param-table.component';
 
 registerLocaleData(zh);
 
@@ -34,7 +35,8 @@ registerLocaleData(zh);
     ConfigParamTableComponent,
     MainToolbarComponent,
     SysCommParamTableComponent,
-    RouteParamTableComponent
+    RouteParamTableComponent,
+    ComRouteParamTableComponent
   ],
   imports: [
     BrowserModule,

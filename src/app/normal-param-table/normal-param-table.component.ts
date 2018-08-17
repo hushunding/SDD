@@ -1,10 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { NormalParamSchemtic, ParamDataSet, CommParamEntry, ParamValue } from '../Param/ParamTmpl';
+import { NormalParamSchemtic, ParamDataSet, CommParamEntry, ParamValue, DataSchemtic } from '../Param/ParamTmpl';
 
-interface DataSchemtic extends CommParamEntry {
-  SeqNo: number;
-  ParmName: string;
-}
+
 
 @Component({
   selector: 'normal-param-table',

@@ -36,11 +36,15 @@ export type NormalParamSchemtic = NormalParamTmpl<CommParamEntry>;   // 参数�
 export type ParamValue = NormalParamTmpl<number | string>;              // 参数值
 export type ParamRemark = NormalParamTmpl<string>;                      // 参数模板
 
+export interface DataSchemtic extends CommParamEntry {
+    SeqNo: number;
+    ParmName: string;
+  }
 
 /**
  * @description 参数集合,多种车型组成一个参数。
  */
-export interface ParamDataSet<ParamT extends ParamValue> {
+export interface ParamDataSet<ParamT> {
     paramSerial: Array<{
         Name: string;
         Data: ParamT;

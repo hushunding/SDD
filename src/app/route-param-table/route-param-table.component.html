@@ -1,56 +1,33 @@
-<nz-table #ParamTable nzBordered [nzData]="Schemtic" [nzPageSize]="50" nzSize="middle">
+<nz-table #ParamTable nzBordered [nzData]="tableData" [nzPageSize]="20" nzSize="middle" [nzScroll]="{x:'1300px'}">
   <thead>
     <tr>
-      <th nzWidth="60px">No</th>
-      <th nzWidth="200px">参数</th>
-      <th nzWidth="400px">描述</th>
-      <th nzWidth="70px">单位</th>
-      <th *ngFor="let c of ConfRange; let i=index" ng-f nzWidth="100px">
-        <span nz-tooltip [nzTitle]="paramDataSet.paramSerial[i].Name" >{{'配置值'+(ConfCount > 1? i+1:"")}} </span>
+      <th nzWidth="100px" nzLeft="0px"> <a *ngIf="Editing" (click)="AddRoute()">增加</a>
+      <span *ngIf="!Editing" >序号</span></th>
+      <th *ngFor="let sch of theads;" class="Valuecol" >
+        {{sch.Desc}}
       </th>
-      <th nzWidth="150px">提供者</th>
-      <th nz-tooltip="备注修改不影响版本">备注</th>
+
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let sch of ParamTable.data">
-      <!-- 
-          <td>
-            <div class="editable-cell">
-              <div class="editable-cell-text-wrapper">
-                <ng-container *ngIf="!editCache[data.key].edit">
-                  {{data.name}}
-                  <i class="anticon anticon-edit editable-cell-icon" (click)="startEdit(data.key)"></i>
-                </ng-container>
-                <ng-container *ngIf="editCache[data.key].edit">
-                  <input type="text" nz-input [(ngModel)]="editCache[data.key].name">
-                  <i class="anticon anticon-check editable-cell-icon-check" (click)="finishEdit(data.key)"></i>
-                </ng-container>
-              </div>
-            </div>
-          </td> -->
-      <td>{{sch.SeqNo}}</td>
-      <td>{{sch.ParmName}}</td>
-      <td>{{sch.Desc}}</td>
-      <td>{{sch.Uint}}</td>
-
-      <!-- <td *ngFor="let i of ConfRange">176000</td> -->
-      <td *ngFor="let c of ConfRange; let i=index">
+    <tr *ngFor="let dat of ParamTable.data; let i=index">
+      <td>
+        <nz-popconfirm *ngIf="Editing" [nzTitle]="'确定删除?'" (nzOnConfirm)="deleteRoute(i)">
+          <a nz-popconfirm>删</a>
+        </nz-popconfirm>
+        <span *ngIf="!Editing">{{i}}</span>
+      </td>
+       
+      <td *ngFor="let sch of theads; let i=index">
         <input nz-input *ngIf="sch.Scole.type === 'number'" type="number" [max]="sch.Scole.max" [min]="sch.Scole.min" [step]="sch.Scole.step"
-          [(ngModel)]="paramDataSet.paramSerial[i].Data[sch.ParmName]" [disabled]="!Editing || !paramDataSet.paramSerial[i].Data.hasOwnProperty(sch.ParmName)">
+          [(ngModel)]="dat[sch.ParmName]" [disabled]="!Editing || !dat.hasOwnProperty(sch.ParmName)">
         
-        <nz-select class = "textinput" *ngIf="sch.Scole.type === 'text'" [(ngModel)]="paramDataSet.paramSerial[i].Data[sch.ParmName]" [nzDisabled]="!Editing">
+        <nz-select class = "textinput" *ngIf="sch.Scole.type === 'text'" [(ngModel)]="dat[sch.ParmName]" [nzDisabled]="!Editing || !dat.hasOwnProperty(sch.ParmName)">
           <nz-option *ngFor="let item of sch.Scole.valueset" [nzLabel]="item" [nzValue]="item">
           </nz-option>
         </nz-select>
-      </td>
-      <td>{{sch.Provider}}</td>
-      <textarea nz-input [(ngModel)]="paramDataSet.paramRemark[sch.ParmName]"> </textarea>
-      <!-- <td>
-            <nz-popconfirm [nzTitle]="'Sure to delete?'" (nzOnConfirm)="deleteRow(data.key)">
-              <a nz-popconfirm>Delete</a>
-            </nz-popconfirm>
-          </td> -->
+      </td> 
+      
     </tr>
   </tbody>
 </nz-table>

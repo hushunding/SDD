@@ -159,28 +159,130 @@ export const SysRouteSchemtic: SysRouteParamSchemtic = {
 
 };
 
-export class SysRouteParam implements SysRouteParmTmpl<number, string> {
-    CBI_UID: string;
-    RouteName: string;
-    StartSignal: string;
-    EndSignal: string;
-    RouteLength: number;
-    ApSR: number;
-    MaxSR: number;
-    WorstApGrade: number;
-    AvgApGrade: number;
-    RouteWorstGrade: number;
-    IATPCommType: string;
-    Previewer: string;
-    PreviewDist: number;
-    ApBeacon: string;
-    ApBcn2Axel: number;
-    BerthSection: string;
-    WellTime: number;
-    BerthSectLen: number;
-    BerthSectWorstGrade: number;
-    OL: string;
-    isOverLockZone: string;
+function GetSpecValueofArray(dataArray: any[], attr: string, res: number, func: (a1, a2) => number) {
+    for (const data of dataArray) {
+        res = func(res, data[attr]);
+    }
+    return res;
+}
+export type SysRouteParam = SysRouteParmTmpl<number, string>;
+// 通用的进路参数,提供统一的输入以及合并后的输出
+export class SysRouteParamCom implements SysRouteParmTmpl<number, string> {
+    CBI_UID = '';
+    RouteName = '';
+    StartSignal = '';
+    EndSignal = '';
+    RouteLength = 100;
+    ApSR = 80;
+    MaxSR = 80;
+    WorstApGrade = 0;
+    AvgApGrade = 0;
+    RouteWorstGrade = 0;
+    IATPCommType = '';
+    Previewer = '';
+    PreviewDist = 100;
+    ApBeacon = '';
+    ApBcn2Axel = 100;
+    BerthSection = '';
+    WellTime = 30;
+    BerthSectLen = 120;
+    BerthSectWorstGrade = 0;
+    OL = '';
+    isOverLockZone = '';
+    get O_ApLength() { return GetSpecValueofArray(this.trainRouteList, 'O_ApLength', Number.MIN_SAFE_INTEGER, Math.max); }
+    get CFG_T_ROUTE_VALID_DMC() { return GetSpecValueofArray(this.trainRouteList, 'CFG_T_ROUTE_VALID_DMC', Number.MIN_SAFE_INTEGER, Math.max); }
+    get CFG_T_LCROUTE_RELEASE_DMC() { return GetSpecValueofArray(this.trainRouteList, 'CFG_T_LCROUTE_RELEASE_DMC', Number.MIN_SAFE_INTEGER, Math.max); }
+    get CFG_T_ROUTE_VALID_IMC() { return GetSpecValueofArray(this.trainRouteList, 'CFG_T_ROUTE_VALID_IMC', Number.MIN_SAFE_INTEGER, Math.max); }
+    get CFG_T_LCROUTE_RELEASE_IMC() { return GetSpecValueofArray(this.trainRouteList, 'CFG_T_LCROUTE_RELEASE_IMC', Number.MIN_SAFE_INTEGER, Math.max); }
+    get SPKS_ACT_TIME() { return GetSpecValueofArray(this.trainRouteList, 'SPKS_ACT_TIME', Number.MIN_SAFE_INTEGER, Math.max); }
+    get CFG_T_OVERLAP_VALID_BERTH() { return GetSpecValueofArray(this.trainRouteList, 'CFG_T_OVERLAP_VALID_BERTH', Number.MIN_SAFE_INTEGER, Math.max); }
+    get CFG_T_BERTHSEC_OVERLAP_RELEASE() { return GetSpecValueofArray(this.trainRouteList, 'CFG_T_BERTHSEC_OVERLAP_RELEASE', Number.MIN_SAFE_INTEGER, Math.max); }
+    get CFG_T_OVERLAP_VALID_ROUTE() { return GetSpecValueofArray(this.trainRouteList, 'CFG_T_OVERLAP_VALID_ROUTE', Number.MIN_SAFE_INTEGER, Math.max); }
+    get CFG_T_ROUTE_OVERLAP_RELEASE() { return GetSpecValueofArray(this.trainRouteList, 'CFG_T_ROUTE_OVERLAP_RELEASE', Number.MIN_SAFE_INTEGER, Math.max); }
+    get CFG_T_YDROUTE_RELEASE() { return GetSpecValueofArray(this.trainRouteList, 'CFG_T_YDROUTE_RELEASE', Number.MIN_SAFE_INTEGER, Math.max); }
+    [key: string]: string | number | any;
+
+    private trainRouteList = new Array<SysRouteParamSingle>();
+
+    constructor() {
+
+    }
+
+    NewSignalRouteParam(vhl: VehicleParam, equ: EquipParam, prj: ProjectParam, cnf: ConfigParam, com: SysCommParam) {
+        const single = new SysRouteParamSingle(vhl, equ, prj, cnf, com, this);
+        this.trainRouteList.push(single);
+        return single;
+    }
+    RemoveConfig(i: number) {
+        this.trainRouteList = this.trainRouteList.filter((v, fi) => fi !== i);
+    }
+}
+
+// 单车参数,输入与通用同源，todo 后续再提供独立的参数设置对象
+export class SysRouteParamSingle implements SysRouteParmTmpl<number, string> {
+    get CBI_UID() {
+        return this.routeCom.CBI_UID;
+    }
+    get RouteName() {
+        return this.routeCom.RouteName;
+    }
+    get StartSignal() {
+        return this.routeCom.StartSignal;
+    }
+    get EndSignal() {
+        return this.routeCom.EndSignal;
+    }
+    get RouteLength() {
+        return this.routeCom.RouteLength;
+    }
+    get ApSR() {
+        return this.routeCom.ApSR;
+    }
+    get MaxSR() {
+        return this.routeCom.MaxSR;
+    }
+    get WorstApGrade() {
+        return this.routeCom.WorstApGrade;
+    }
+    get AvgApGrade() {
+        return this.routeCom.AvgApGrade;
+    }
+    get RouteWorstGrade() {
+        return this.routeCom.RouteWorstGrade;
+    }
+    get IATPCommType() {
+        return this.routeCom.IATPCommType;
+    }
+    get Previewer() {
+        return this.routeCom.Previewer;
+    }
+    get PreviewDist() {
+        return this.routeCom.PreviewDist;
+    }
+    get ApBeacon() {
+        return this.routeCom.ApBeacon;
+    }
+    get ApBcn2Axel() {
+        return this.routeCom.ApBcn2Axel;
+    }
+    get BerthSection() {
+        return this.routeCom.BerthSection;
+    }
+    get WellTime() {
+        return this.routeCom.WellTime;
+    }
+    get BerthSectLen() {
+        return this.routeCom.BerthSectLen;
+    }
+    get BerthSectWorstGrade() {
+        return this.routeCom.BerthSectWorstGrade;
+    }
+    get OL() {
+        return this.routeCom.OL;
+    }
+    get isOverLockZone() {
+        return this.routeCom.isOverLockZone;
+    }
     get O_ApLength() { return -1; }
     get CFG_T_ROUTE_VALID_DMC() { return -1; }
     get CFG_T_LCROUTE_RELEASE_DMC() { return -1; }
@@ -194,9 +296,10 @@ export class SysRouteParam implements SysRouteParmTmpl<number, string> {
     get CFG_T_YDROUTE_RELEASE() { return -1; }
     [key: string]: string | number | any;
 
-    constructor(private vhl: VehicleParam, private equ: EquipParam, private prj: ProjectParam, private cnf: ConfigParam, private com: SysCommParam) {
+    constructor(private vhl: VehicleParam, private equ: EquipParam,
+        private prj: ProjectParam, private cnf: ConfigParam,
+        private com: SysCommParam, private routeCom: SysRouteParamCom) {
 
     }
 
 }
-

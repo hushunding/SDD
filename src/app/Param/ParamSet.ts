@@ -4,7 +4,7 @@ import { ProjectSchmetic, ProjectParam } from './Project';
 import { ConfigSchematic, ConfigParam } from './Config';
 import { NormalParamSchemtic, ParamDataSet, ParamValue, ParamRemark } from './ParamTmpl';
 import { SysCommSchemtic, SysCommParam } from './SysComm';
-import { SysRouteSchemtic } from './SysRoute';
+import { SysRouteSchemtic, SysRouteParamCom, SysRouteParamSingle } from './SysRoute';
 
 interface ParamSetVersion {
     Macro?: string;        // 整体版本，模板为SDD整体版本，数据为最终的版本
@@ -51,6 +51,8 @@ export class ParamSet {
     Project = GetDefaultParamDataSet(new ProjectParam(), ParamSetSchematic.Project);
     Config = GetDefaultParamDataSet(new ConfigParam(), ParamSetSchematic.Config);
     SysComm = GetDefaultParamDataSet(this.NewSysComm(), ParamSetSchematic.SysComm);
+    SysRoute = GetDefaultParamDataSet(new Array<SysRouteParamCom>(), ParamSetSchematic.SysRoute);
+    SysRouteSignal = GetDefaultParamDataSet(new Array<SysRouteParamSingle>(), ParamSetSchematic.SysRoute);
 
     constructor(ProjectName: string) {
         this.Version = {
@@ -69,11 +71,48 @@ export class ParamSet {
             this.Project.GetData(0),
             this.Config.GetData(0));
     }
+    AddNewRoute() {
+        const routearray = this.SysRoute.GetData(0);
+        const newRoute = new SysRouteParamCom();
+        this.SysRoute.paramSerial[0].Data = routearray.concat(newRoute);
+        for (let i = 0; i < this.Vehicle.paramSerial.length; i++) {
+            const routearraysingle = this.SysRouteSignal.GetData(i);
+            this.SysRouteSignal.paramSerial[i].Data = routearraysingle.concat(newRoute.NewSignalRouteParam(
+                this.Vehicle.GetData(i),
+                this.Equip.GetData(0),
+                this.Project.GetData(0),
+                this.Config.GetData(0),
+                this.SysComm.GetData(i)
+            ));
+        }
+    }
+    DelRoute(delindex: number) {
+        for (let i = 0; i < this.Vehicle.paramSerial.length; i++) {
+            const routearraysingle = this.SysRouteSignal.GetData(i);
+            this.SysRouteSignal.paramSerial[i].Data =
+                routearraysingle.filter((v, fi) => fi !== delindex);
+        }
+        const routearray = this.SysRoute.GetData(0);
+        this.SysRoute.paramSerial[0].Data = routearray.filter((v, fi) => fi !== delindex);
+    }
     AddTrainConfCount(confName: string) {
         if (!this.Vehicle.paramSerial.some((s) => s.Name === confName)) {
             const Data = new VehicleParam();
             this.Vehicle.paramSerial.push({ Name: confName, Data });
             this.SysComm.paramSerial.push({ Name: confName, Data: this.NewSysComm() });
+            const i = this.Vehicle.paramSerial.length - 1;
+            this.SysRouteSignal.paramSerial.push({ Name: confName, Data: new Array<SysRouteParamSingle>() });
+            const routearray = this.SysRoute.GetData(0);
+            const routearraysingle = this.SysRouteSignal.GetData(i);
+            for (const route of routearray) {
+                routearraysingle.push(route.NewSignalRouteParam(
+                    this.Vehicle.GetData(i),
+                    this.Equip.GetData(0),
+                    this.Project.GetData(0),
+                    this.Config.GetData(0),
+                    this.SysComm.GetData(i)
+                ));
+            }
             return true;
         } else {
             return false;
@@ -81,12 +120,20 @@ export class ParamSet {
 
     }
     DeleteConfig(confName: string) {
-        this.Vehicle.paramSerial = this.Vehicle.paramSerial.filter((v) => v.Name !== confName);
-        this.SysComm.paramSerial = this.SysComm.paramSerial.filter((v) => v.Name !== confName);
+        const index = this.Vehicle.paramSerial.findIndex((v) => v.Name === confName);
+        if (index >= 0) {
+            this.Vehicle.paramSerial = this.Vehicle.paramSerial.filter((v) => v.Name !== confName);
+            this.SysComm.paramSerial = this.SysComm.paramSerial.filter((v) => v.Name !== confName);
+            this.SysRouteSignal.paramSerial = this.SysRouteSignal.paramSerial.filter((v) => v.Name !== confName);
+            const routearray = this.SysRoute.GetData(0);
+            for (const route of routearray) {
+                route.RemoveConfig(index);
+            }
+        }
     }
 }
 
-export function GetDefaultParamDataSet<ParamT extends ParamValue>(GA: ParamT, tmpl: NormalParamSchemtic): ParamDataSet<ParamT> {
+export function GetDefaultParamDataSet<ParamT>(GA: ParamT, tmpl: NormalParamSchemtic): ParamDataSet<ParamT> {
     const paramRemark: ParamRemark = {};
     for (const key in tmpl) {
         if (tmpl.hasOwnProperty(key)) {
@@ -94,7 +141,7 @@ export function GetDefaultParamDataSet<ParamT extends ParamValue>(GA: ParamT, tm
         }
     }
     const GetData = function (i) { return this.paramSerial[i].Data; };
-    const paramset = { paramSerial: [{ Name: '默认', Data: GA }], paramRemark, editing: true, GetData};
+    const paramset = { paramSerial: [{ Name: '默认', Data: GA }], paramRemark, editing: true, GetData };
     paramset.GetData = GetData.bind(paramset);
     return paramset;
 }
