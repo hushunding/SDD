@@ -18,7 +18,16 @@ install:
  - npm install
  
 script:
- - npm run electron:linux
  - npm run test
+ - npm run electron:linux
+ 
 
-
+deploy:
+  provider: releases
+  user: "hushunding"
+  password: "first_7247"
+  file_glob: true
+  file: "release/SDD*.*"
+  skip_cleanup: true
+  on:
+    tags: true
