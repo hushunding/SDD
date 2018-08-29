@@ -25,8 +25,7 @@ script:
 
 deploy:
   provider: releases
-  user: "hushunding"
-  password: "first_7247"
+  api_key: $GITHUB_TOKEN
   file_glob: true
   #file: "release/SDD*.*"
   file: "dist/**/*"
