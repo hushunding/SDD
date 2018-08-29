@@ -19,5 +19,6 @@ install:
  
 script:
  - npm run electron:linux
+ - npm run test
 
 
