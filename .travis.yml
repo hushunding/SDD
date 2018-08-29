@@ -19,5 +19,6 @@ install:
  
 script:
  - npm run build
+ - npm run electron:windows
 
 
