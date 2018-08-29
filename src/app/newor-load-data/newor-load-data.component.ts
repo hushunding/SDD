@@ -87,5 +87,9 @@ export class NeworLoadDataComponent implements OnInit {
   }
   ngOnInit() {
   }
+  OpenPrj(file) {
+    console.log(file);
+    throw new Error('');
+  }
 
 }

@@ -6,10 +6,18 @@
     "configurations": [
         {
             "type": "chrome",
-            "request": "launch",
-            "name": "启动 Chrome 并打开 localhost",
-            "url": "http://localhost:4200",
+            "request": "attach",
+            "name": "Attach to Chrome",
+            "port": 9222,
             "webRoot": "${workspaceFolder}"
-        }
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Electron Main",
+            "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron",
+            "program": "${workspaceFolder}/dist/main.js",
+            "protocol": "inspector"
+        },
     ]
 }

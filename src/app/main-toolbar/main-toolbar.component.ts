@@ -26,7 +26,7 @@ export class MainToolbarComponent implements OnInit {
     this._DelTrainConfCTvisible = value;
   }
 
-  constructor(private paramDS: ParamDataService, private route: ActivatedRoute,
+  constructor(public paramDS: ParamDataService, private route: ActivatedRoute,
     private router: Router) {
     this.router.events.subscribe((v) => {
       console.log(v);

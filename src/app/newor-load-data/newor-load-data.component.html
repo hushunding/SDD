@@ -1,4 +1,4 @@
-<input type="file" #fileElem accept=".sdd" style="display:none" (change)="(fileElem.value)">
+<input type="file" #fileElem accept=".sdd" style="display:none" (change)="OpenPrj(fileElem.files)">
 <input nz-input type="file" #exfileElem accept=".xlsx" style="display:none" (change)="NewSDDFromExcel(modalTemplate, exfileElem)">
 <nz-layout>
   <nz-sider [nzWidth]="300" style="background:cornflowerblue">
