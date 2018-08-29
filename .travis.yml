@@ -19,7 +19,8 @@ install:
  
 script:
  - # npm run test
- - npm run electron:linux
+ - #npm run electron:linux
+ - npm run build:prod
  
 
 deploy:
@@ -27,7 +28,8 @@ deploy:
   user: "hushunding"
   password: "first_7247"
   file_glob: true
-  file: "release/SDD*.*"
+  #file: "release/SDD*.*"
+  file: "dist/**/*"
   skip_cleanup: true
   on:
     tags: true
