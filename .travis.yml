@@ -18,6 +18,6 @@ install:
  - npm install
  
 script:
- - npm run electron:linux
+ - npm run electron:local
 
 
