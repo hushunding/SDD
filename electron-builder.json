@@ -32,7 +32,6 @@
     ]
   },
   "linux": {
-    "icon": "dist",
     "target": [
       "AppImage"
     ]
