@@ -18,7 +18,6 @@ install:
  - npm install
  
 script:
- - npm run build
- - npm run electron:windows
+ - npm run electron:linux
 
 
