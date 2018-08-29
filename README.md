@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/hushunding/SDD.svg?branch=master)](https://travis-ci.org/hushunding/SDD)
+
 # SDD
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.8.
