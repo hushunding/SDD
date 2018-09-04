@@ -20,7 +20,6 @@
         "!tslint.json"
     ],
   "win": {
-    
     "target": [
       "portable"
     ]
@@ -28,12 +27,12 @@
   "mac": {
     "icon": "dist",
     "target": [
-      "dmg"
+      "zip"
     ]
   },
   "linux": {
     "target": [
-      "AppImage"
+      "zip"
     ]
   }
 }
