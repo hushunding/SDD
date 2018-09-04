@@ -20,6 +20,7 @@ import { MainToolbarComponent } from './main-toolbar/main-toolbar.component';
 import { SysCommParamTableComponent } from './sys-comm-param-table/sys-comm-param-table.component';
 import { RouteParamTableComponent } from './route-param-table/route-param-table.component';
 import { ComRouteParamTableComponent } from './com-route-param-table/com-route-param-table.component';
+import { ElectronService } from './electron.service';
 
 registerLocaleData(zh);
 
@@ -46,7 +47,7 @@ registerLocaleData(zh);
     NgZorroAntdModule,
     MainRoutingModule
   ],
-  providers: [{ provide: NZ_I18N, useValue: zh_CN }],
+  providers: [{ provide: NZ_I18N, useValue: zh_CN }, ElectronService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

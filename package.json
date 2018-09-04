@@ -10,7 +10,7 @@
     "build": "npm run postinstall:electron && npm run electron:serve-tsc && ng build",
     "build:dev": "npm run build -- -c dev",
     "build:prod": "npm run build -- -c production --base-href=./ ",
-    "ng:serve": "ng serve",
+    "ng:serve": "ng serve --aot",
     "ng:serve:web": "npm run postinstall:web && ng serve -o",
     "electron:serve-tsc": "tsc -p tsconfig-serve.json",
     "electron:serve": "wait-on http-get://localhost:4200/ && npm run electron:serve-tsc && electron . --serve --remote-debugging-port=9222",
@@ -23,9 +23,7 @@
   },
   "private": true,
   "main": "dist/main.js",
-  "dependencies": {
-
-  },
+  "dependencies": {},
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.6.8",
     "@angular/cli": "~6.0.8",

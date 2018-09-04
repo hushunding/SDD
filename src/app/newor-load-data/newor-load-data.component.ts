@@ -1,6 +1,7 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { NzModalService, NzModalRef } from 'ng-zorro-antd';
 import { ParamDataService } from '../param-data.service';
+import { ElectronService } from '../electron.service';
 
 @Component({
   selector: 'app-newor-load-data',
@@ -34,7 +35,7 @@ export class NeworLoadDataComponent implements OnInit {
   NewPrName = 'GA';
   NewPrjWD = '';
   isSpinning = false;
-  constructor(private modalService: NzModalService, private paramDS: ParamDataService) {
+  constructor(private modalService: NzModalService, private paramDS: ParamDataService, private es: ElectronService) {
     const hfileListstr = localStorage.getItem('hfileList');
     if (hfileListstr) {
       this.hfileList = JSON.parse(hfileListstr);
@@ -47,6 +48,7 @@ export class NeworLoadDataComponent implements OnInit {
       // alert('功能未实现');
       exfileElem.click();
     } else {
+      this.isSpinning = false;
       this.createTplModal(tplContent);
     }
   }
@@ -59,6 +61,11 @@ export class NeworLoadDataComponent implements OnInit {
     } else {
       this.excelFile = '';
     }
+  }
+  OpenSDDPrj() {
+    const { dialog } = this.es.remote;
+    const [sddfile, ] = dialog.showOpenDialog({ title: '选择SDD文件', filters: [{ name: 'SDD', extensions: ['sdd', 'SDD'] }], properties: ['openFile'] });
+    console.log(sddfile);
   }
 
   createTplModal(tplContent: TemplateRef<{}>): void {
