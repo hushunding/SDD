@@ -19,16 +19,16 @@ install:
  
 script:
  - # npm run test
- - #npm run electron:linux
- - npm run build:prod
+ - npm run electron:linux
+ - # npm run build:prod
  
 
 deploy:
   provider: releases
   api_key: $GITHUB_TOKEN
   file_glob: true
-  #file: "release/SDD*.*"
-  file: "dist/**/*"
+  file: "release/SDD*.*"
+  #file: "dist/**/*"
   skip_cleanup: true
   on:
     tags: true
