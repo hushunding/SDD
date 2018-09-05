@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnInit, TemplateRef, AfterViewInit } from '@angular/core';
 import { NzModalService, NzModalRef } from 'ng-zorro-antd';
 import { ParamDataService } from '../param-data.service';
 import { ElectronService } from '../electron.service';
@@ -8,7 +8,8 @@ import { ElectronService } from '../electron.service';
   templateUrl: './newor-load-data.component.html',
   styleUrls: ['./newor-load-data.component.css']
 })
-export class NeworLoadDataComponent implements OnInit {
+export class NeworLoadDataComponent implements OnInit, AfterViewInit {
+
 
   hfileList: Array<{
     FileName: string;
@@ -33,20 +34,46 @@ export class NeworLoadDataComponent implements OnInit {
   }
   excelFile;
   NewPrName = 'GA';
-  NewPrjWD = '';
+
+  private _NewPrjWD = '';
+  public get NewPrjWD() {
+    return this._NewPrjWD;
+  }
+  public set NewPrjWD(value) {
+    this.IsPrjWDExist = this.es.fs.existsSync(value);
+    if (this.IsPrjWDExist) {
+      this.remPrjWD = true;
+      localStorage.setItem('prjwd', value);
+    } else {
+      this.remPrjWD = false;
+    }
+    this._NewPrjWD = value;
+  }
   isSpinning = false;
+  IsPrjWDExist = false;
+  private _remPrjWD = false;
+  public get remPrjWD() {
+    return this._remPrjWD;
+  }
+  public set remPrjWD(value) {
+    if (!value) {
+      localStorage.removeItem('prjwd');
+    }
+    this._remPrjWD = value;
+  }
   constructor(private modalService: NzModalService, private paramDS: ParamDataService, private es: ElectronService) {
     const hfileListstr = localStorage.getItem('hfileList');
     if (hfileListstr) {
       this.hfileList = JSON.parse(hfileListstr);
     }
   }
-
-  NewSDD(way, tplContent: TemplateRef<{}>, exfileElem: HTMLInputElement) {
+  ngAfterViewInit(): void {
+    this.NewPrjWD = localStorage.getItem('prjwd');
+  }
+  NewSDD(way, tplContent: TemplateRef<{}>) {
     this.CurrentWay = way;
     if (this.isLoadFromExcel) {
-      // alert('功能未实现');
-      exfileElem.click();
+      alert('功能未实现');
     } else {
       this.isSpinning = false;
       this.createTplModal(tplContent);
@@ -64,10 +91,16 @@ export class NeworLoadDataComponent implements OnInit {
   }
   OpenSDDPrj() {
     const { dialog } = this.es.remote;
-    const [sddfile, ] = dialog.showOpenDialog({ title: '选择SDD文件', filters: [{ name: 'SDD', extensions: ['sdd', 'SDD'] }], properties: ['openFile'] });
+    const sddfile = dialog.showOpenDialog({ title: '选择SDD文件', filters: [{ name: 'SDD', extensions: ['sdd', 'SDD'] }], properties: ['openFile'] });
     console.log(sddfile);
   }
-
+  SelNewPrjWD() {
+    const { dialog } = this.es.remote;
+    const sddfold = dialog.showOpenDialog({ title: '选择项目目录', properties: ['openDirectory', 'createDirectory'] });
+    if (sddfold !== undefined) {
+      this.NewPrjWD = sddfold[0];
+    }
+  }
   createTplModal(tplContent: TemplateRef<{}>): void {
 
     const modal: NzModalRef<{}> = this.modalService.create({
@@ -83,7 +116,7 @@ export class NeworLoadDataComponent implements OnInit {
       {
         label: '确定',
         type: 'primary',
-        disabled: this.isSpinning && this.isLoadFromExcel,
+        disabled: () => !this.IsPrjWDExist,
         onClick: () => modal.triggerOk()
       }],
       nzOnOk: () => {

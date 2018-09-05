@@ -1,5 +1,5 @@
-<input type="file" #fileElem accept=".sdd" style="display:none" (change)="OpenPrj(fileElem.files)">
-<input nz-input type="file" #exfileElem accept=".xlsx" style="display:none" (change)="NewSDDFromExcel(modalTemplate, exfileElem)">
+<!-- <input type="file" #fileElem accept=".sdd" style="display:none" (change)="OpenPrj(fileElem.files)">
+<input nz-input type="file" #exfileElem accept=".xlsx" style="display:none" (change)="NewSDDFromExcel(modalTemplate, exfileElem)"> -->
 <nz-layout>
   <nz-sider [nzWidth]="300" style="background:cornflowerblue">
     <h1 class="sidetext">BiTRACON 800 SDD</h1>
@@ -31,7 +31,7 @@
     <nz-content style="margin: 32px 16px;">
       <div style="display:flex;">
         <div *ngFor="let way of NewSDDways">
-          <nz-card nzHoverable style="width:240px; margin-left: 16px;" [nzCover]="coverTemplate" (click)="NewSDD(way, modalTemplate, exfileElem)">
+          <nz-card nzHoverable style="width:240px; margin-left: 16px;" [nzCover]="coverTemplate" (click)="NewSDD(way, modalTemplate)">
             <nz-card-meta [nzTitle]="way.title" [nzDescription]="way.desc"></nz-card-meta>
           </nz-card>
           <ng-template #coverTemplate>
@@ -48,23 +48,43 @@
   <form nz-form>
     <nz-form-item *ngIf="isLoadFromExcel">
       <nz-spin [nzSpinning]="isSpinning">
-        <nz-form-label [nzSpan]="6">excel文件</nz-form-label>
-        <nz-form-control [nzSpan]="14">
+        <nz-form-label [nzSpan]="4">excel文件</nz-form-label>
+        <nz-form-control [nzSpan]="16">
           <nz-form-text>{{excelFile.name}}</nz-form-text>
         </nz-form-control>
       </nz-spin>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label [nzSpan]="6" nzFor="NewPrName">项目名称</nz-form-label>
-      <nz-form-control [nzSpan]="14">
-        <input nz-input [(ngModel)]="NewPrName" name="NewPrName" required [disabled]="isSpinning">
+      <nz-form-label [nzSpan]="4" nzFor="NewPrName">项目名称</nz-form-label>
+      <nz-form-control [nzSpan]="16">
+        <input nz-input [(ngModel)]="NewPrName" name="NewPrName" required [disabled]="isSpinning" #prjname="ngModel">
+        <nz-form-explain *ngIf="(prjname.dirty || prjname.touched) && prjname.errors?.required">需要输入项目名称</nz-form-explain>
+      </nz-form-control>
+      
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="4" nzFor="NewPrjWD">工作目录</nz-form-label>
+      <nz-form-control [nzSpan]="16">
+        <nz-row nzGutter="8">
+          <nz-col nzSpan="20">
+            <input nz-input [(ngModel)]="NewPrjWD" name="NewPrjWD" required [disabled]="isSpinning" #prjwd="ngModel">
+          </nz-col>
+          <nz-col nzSpan="2">
+            <button (click)="SelNewPrjWD()" nz-button>选择</button>
+          </nz-col>
+          <nz-form-explain *ngIf="(prjwd.dirty || prjwd.touched) && prjwd.errors?.required">需要输入工作目录</nz-form-explain>
+          <nz-form-explain *ngIf="(prjwd.dirty || prjwd.touched) && !prjwd.errors?.required && !IsPrjWDExist">工作目录不存在</nz-form-explain>
+        </nz-row>
+
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>
-      <nz-form-label [nzSpan]="6" nzFor="NewPrjWD">工作目录</nz-form-label>
-      <nz-form-control [nzSpan]="14">
-        <input nz-input [(ngModel)]="NewPrjWD" name="NewPrjWD" required [disabled]="isSpinning">
-      </nz-form-control>
-    </nz-form-item>
+        <nz-form-control [nzOffset]="4">
+          <label nz-checkbox [nzDisabled]=!IsPrjWDExist [(ngModel)]="remPrjWD" name="remPrjWD">
+            <span>记住工作目录</span>
+          </label>
+        </nz-form-control>
+      </nz-form-item>
   </form>
 </ng-template>
+
