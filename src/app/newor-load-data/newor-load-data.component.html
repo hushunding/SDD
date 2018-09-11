@@ -27,6 +27,7 @@
       </ng-template>
     </nz-list>
   </nz-sider>
+  
   <nz-layout>
     <nz-content style="margin: 32px 16px;">
       <div style="display:flex;">
@@ -47,18 +48,26 @@
 <ng-template #modalTemplate>
   <form nz-form>
     <nz-form-item *ngIf="isLoadFromExcel">
-      <nz-spin [nzSpinning]="isSpinning">
+      
         <nz-form-label [nzSpan]="4">excel文件</nz-form-label>
         <nz-form-control [nzSpan]="16">
-          <nz-form-text>{{excelFile.name}}</nz-form-text>
+          <nz-row nzGutter="8">
+            <nz-col nzSpan="20">
+              <button (click)="SelExcel()" nz-button [disabled]="isSpinning">选择</button>
+            </nz-col>
+            <nz-col nzSpan="2">
+              <nz-spin [nzSpinning]="isSpinning"></nz-spin>
+            </nz-col>
+            
+          </nz-row>
         </nz-form-control>
-      </nz-spin>
     </nz-form-item>
     <nz-form-item>
       <nz-form-label [nzSpan]="4" nzFor="NewPrName">项目名称</nz-form-label>
       <nz-form-control [nzSpan]="16">
-        <input nz-input [(ngModel)]="NewPrName" name="NewPrName" required [disabled]="isSpinning" #prjname="ngModel">
+        <input nz-input [(ngModel)]="NewPrName" name="NewPrName" required [disabled]="needExcelFile" #prjname="ngModel">
         <nz-form-explain *ngIf="(prjname.dirty || prjname.touched) && prjname.errors?.required">需要输入项目名称</nz-form-explain>
+        <nz-form-explain *ngIf="(prjname.dirty || prjname.touched) && !prjname.errors?.required && sddFileConfuse">工作目录中该项目已存在</nz-form-explain>
       </nz-form-control>
       
     </nz-form-item>
@@ -67,7 +76,7 @@
       <nz-form-control [nzSpan]="16">
         <nz-row nzGutter="8">
           <nz-col nzSpan="20">
-            <input nz-input [(ngModel)]="NewPrjWD" name="NewPrjWD" required [disabled]="isSpinning" #prjwd="ngModel">
+            <input nz-input [(ngModel)]="NewPrjWD" name="NewPrjWD" required [disabled]="needExcelFile" #prjwd="ngModel">
           </nz-col>
           <nz-col nzSpan="2">
             <button (click)="SelNewPrjWD()" nz-button>选择</button>

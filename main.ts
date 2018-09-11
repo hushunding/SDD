@@ -20,9 +20,9 @@ function createWindow() {
   });
 
   if (serve) {
-      require('electron-reload')(__dirname, {
-      electron: require(`electron`)
-    });
+    //   require('electron-reload')(__dirname, {
+    //   electron: require(`electron`)
+    // });
     win.loadURL('http://localhost:4200');
     win.webContents.openDevTools();
   } else {

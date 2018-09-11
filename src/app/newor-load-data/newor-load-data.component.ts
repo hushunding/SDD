@@ -2,6 +2,12 @@ import { Component, OnInit, TemplateRef, AfterViewInit } from '@angular/core';
 import { NzModalService, NzModalRef } from 'ng-zorro-antd';
 import { ParamDataService } from '../param-data.service';
 import { ElectronService } from '../electron.service';
+import * as XLSX from 'xlsx';
+
+interface HFile {
+  FileName: string;
+  Path: string;
+}
 
 @Component({
   selector: 'app-newor-load-data',
@@ -11,11 +17,25 @@ import { ElectronService } from '../electron.service';
 export class NeworLoadDataComponent implements OnInit, AfterViewInit {
 
 
-  hfileList: Array<{
-    FileName: string;
-    Path: string
-  }> = [];
-  isVisible = false;
+  // 历史文件列表 -打开现有程序
+  private _hfileList: Array<HFile> = (() => {
+    const hfileListstr = localStorage.getItem('hfileList');
+    if (hfileListstr) {
+      return JSON.parse(hfileListstr);
+    } else {
+      return [];
+    }
+  })();
+
+  public get hfileList(): Array<HFile> {
+    return this._hfileList;
+  }
+  public set hfileList(value: Array<HFile>) {
+    this._hfileList = value;
+    localStorage.setItem('hfileList', JSON.stringify(value));
+  }
+
+  // 新建
   NewSDDways = [{
     type: 'tmpl',
     title: '从模板新建',
@@ -32,10 +52,22 @@ export class NeworLoadDataComponent implements OnInit, AfterViewInit {
   get isLoadFromExcel() {
     return this.CurrentWay.type === 'excel';
   }
-  excelFile;
-  NewPrName = 'GA';
+
+  sddFileConfuse = false;
+  private _NewPrName = 'GA';
+  public get NewPrName() {
+    return this._NewPrName;
+  }
+  public set NewPrName(value) {
+    this._NewPrName = value;
+    this.checkPath();
+  }
+
 
   private _NewPrjWD = '';
+  /**
+   * @description 工作目录
+  */
   public get NewPrjWD() {
     return this._NewPrjWD;
   }
@@ -48,8 +80,9 @@ export class NeworLoadDataComponent implements OnInit, AfterViewInit {
       this.remPrjWD = false;
     }
     this._NewPrjWD = value;
+    this.checkPath();
   }
-  isSpinning = false;
+
   IsPrjWDExist = false;
   private _remPrjWD = false;
   public get remPrjWD() {
@@ -61,39 +94,46 @@ export class NeworLoadDataComponent implements OnInit, AfterViewInit {
     }
     this._remPrjWD = value;
   }
+
+  excelFile;
+  needExcelFile = false;
+  isSpinning = false;
   constructor(private modalService: NzModalService, private paramDS: ParamDataService, private es: ElectronService) {
-    const hfileListstr = localStorage.getItem('hfileList');
-    if (hfileListstr) {
-      this.hfileList = JSON.parse(hfileListstr);
-    }
+
   }
+
   ngAfterViewInit(): void {
     this.NewPrjWD = localStorage.getItem('prjwd');
   }
-  NewSDD(way, tplContent: TemplateRef<{}>) {
-    this.CurrentWay = way;
-    if (this.isLoadFromExcel) {
-      alert('功能未实现');
-    } else {
-      this.isSpinning = false;
-      this.createTplModal(tplContent);
+  private checkPath() {
+    if (this.es.fs.existsSync(this.NewPrjWD)) {
+      const sddfile = this.es.path.join(this.NewPrjWD, this.NewPrName);
+      if (!this.es.fs.existsSync(sddfile)) {
+        this.sddFileConfuse = false;
+        return true;
+      } else {
+        this.sddFileConfuse = true;
+      }
     }
-  }
-  NewSDDFromExcel(tplContent: TemplateRef<{}>, exfileElem: HTMLInputElement) {
-    if (exfileElem.files.length > 0) {
-      this.excelFile = exfileElem.files[0];
-      this.isSpinning = true;
-      this.createTplModal(tplContent);
-      exfileElem.value = '';
-    } else {
-      this.excelFile = '';
-    }
+    return false;
   }
   OpenSDDPrj() {
     const { dialog } = this.es.remote;
     const sddfile = dialog.showOpenDialog({ title: '选择SDD文件', filters: [{ name: 'SDD', extensions: ['sdd', 'SDD'] }], properties: ['openFile'] });
     console.log(sddfile);
   }
+  NewSDD(way, tplContent: TemplateRef<{}>) {
+    this.CurrentWay = way;
+    if (this.isLoadFromExcel) {
+      this.needExcelFile = true;
+      this.isSpinning = false;
+    } else {
+      this.needExcelFile = false;
+    }
+    this.createTplModal(tplContent, way);
+  }
+
+
   SelNewPrjWD() {
     const { dialog } = this.es.remote;
     const sddfold = dialog.showOpenDialog({ title: '选择项目目录', properties: ['openDirectory', 'createDirectory'] });
@@ -101,10 +141,19 @@ export class NeworLoadDataComponent implements OnInit, AfterViewInit {
       this.NewPrjWD = sddfold[0];
     }
   }
-  createTplModal(tplContent: TemplateRef<{}>): void {
+  SelExcel()  {
+    const { dialog } = this.es.remote;
+    const excel = dialog.showOpenDialog({ title: '选择SDD Excel文件', filters: [{ name: 'Excel', extensions: ['xlsx'] }], properties: ['openFile'] });
+    if (excel !== undefined) {
+      this.isSpinning = true;
+      const wb = XLSX.readFile(excel[0]);
+      console.log(wb.SheetNames);
+    }
+  }
+  createTplModal(tplContent: TemplateRef<{}>, title: string): void {
 
     const modal: NzModalRef<{}> = this.modalService.create({
-      nzTitle: this.CurrentWay.title,
+      nzTitle: title,
       nzContent: tplContent,
       nzMaskClosable: false,
       nzClosable: false,
@@ -116,7 +165,7 @@ export class NeworLoadDataComponent implements OnInit, AfterViewInit {
       {
         label: '确定',
         type: 'primary',
-        disabled: () => !this.IsPrjWDExist,
+        disabled: () => !this.IsPrjWDExist || this.sddFileConfuse,
         onClick: () => modal.triggerOk()
       }],
       nzOnOk: () => {
@@ -127,9 +176,4 @@ export class NeworLoadDataComponent implements OnInit, AfterViewInit {
   }
   ngOnInit() {
   }
-  OpenPrj(file) {
-    console.log(file);
-    throw new Error('');
-  }
-
 }

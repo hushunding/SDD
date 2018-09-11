@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ParamSet } from './Param/ParamSet';
+import { ParamSet, ParamSetSchematic } from './Param/ParamSet';
 
 @Injectable({
   providedIn: 'root'
