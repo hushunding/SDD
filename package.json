@@ -18,7 +18,7 @@
     "electron:linux": "npm run build:prod && npx electron-builder build --linux",
     "electron:windows": "npm run build:prod && npx electron-builder build --windows",
     "electron:mac": "npm run build:prod && npx electron-builder build --mac",
-    "test": "npm run postinstall:web && ng test",
+    "test":"mocha -r ./node_modules/ts-node/register src/test/**/*.ts",
     "e2e": "npm run postinstall:web && ng e2e"
   },
   "private": true,
