@@ -177,19 +177,6 @@ export const ConfigSchematic: ConfigParamSchemtic = {
     },
 };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 export class ConfigParam implements ConfigParmTmpl<number> {
     [key: string]: number;
     Conf_LocDiff = ConfigSchematic.Conf_LocDiff.Default;
