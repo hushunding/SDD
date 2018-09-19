@@ -18,8 +18,8 @@ install:
  - npm install
  
 script:
- - # npm run test
- - npm run electron:linux
+ -  npm run test
+ - # npm run electron:linux
  - # npm run build:prod
  
 

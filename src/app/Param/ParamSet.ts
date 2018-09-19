@@ -16,7 +16,7 @@ interface ParamSetVersion {
 }
 
 interface ParamSetTmpl<T> {
-    Version: ParamSetVersion;
+    // Version: ParamSetVersion;
     Vehicle: T;     // 车辆参数
     Equip: T;       // 设备参数
     Project: T;     // 线路参数
@@ -29,13 +29,13 @@ interface ParamSetTmpl<T> {
 export type ParamSetSchemtic = ParamSetTmpl<NormalParamSchemtic>;
 
 export const ParamSetSchematic: ParamSetTmpl<NormalParamSchemtic> = {
-    Version: {
-        Macro: 'V2.4',
-        Schemtic: 'V2.4.0',
-        Input: 'V0.1.0',            // 默认值版本
-        ProjectName: 'Schemtic',
-        Log: [['V2.4', 'Excel转APP,之前的修订记录见原SDD']]
-    },
+    // Version: {
+    //     Macro: 'V2.4',
+    //     Schemtic: 'V2.4.0',
+    //     Input: 'V0.1.0',            // 默认值版本
+    //     ProjectName: 'Schemtic',
+    //     Log: [['V2.4', 'Excel转APP,之前的修订记录见原SDD']]
+    // },
     Vehicle: VehicleSchemtic,   // 车辆参数
     Equip: EquipSchmtic,        // 设备参数
     Project: ProjectSchmetic,   // 线路参数
@@ -45,7 +45,7 @@ export const ParamSetSchematic: ParamSetTmpl<NormalParamSchemtic> = {
 };
 
 export class ParamSet {
-    Version: ParamSetVersion;
+    // Version: ParamSetVersion;
     Vehicle = GetDefaultParamDataSet(new VehicleParam(), ParamSetSchematic.Vehicle);
     Equip = GetDefaultParamDataSet(new EquipParam(), ParamSetSchematic.Equip);
     Project = GetDefaultParamDataSet(new ProjectParam(), ParamSetSchematic.Project);
@@ -55,13 +55,13 @@ export class ParamSet {
     SysRouteSignal = GetDefaultParamDataSet(new Array<SysRouteParamSingle>(), ParamSetSchematic.SysRoute);
 
     constructor(ProjectName: string) {
-        this.Version = {
-            Schemtic: ParamSetSchematic.Version.Schemtic,         // 依据模板版本，
-            Input: 'V0.1.0',                              // 初始版本值
-            ProjectName: ProjectName,
-            Log: [['V0.1.0', `根据${ParamSetSchematic.Version.Macro}模板创建`]],
-            LastModifyTime: new Date(Date.now())
-        };
+        // this.Version = {
+        //     Schemtic: ParamSetSchematic.Version.Schemtic,         // 依据模板版本，
+        //     Input: 'V0.1.0',                              // 初始版本值
+        //     ProjectName: ProjectName,
+        //     Log: [['V0.1.0', `根据${ParamSetSchematic.Version.Macro}模板创建`]],
+        //     LastModifyTime: new Date(Date.now())
+        // };
     }
     private NewSysComm() {
         const index = this.Vehicle.paramSerial.length - 1;
