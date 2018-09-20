@@ -1,5 +1,4 @@
 import { NormalParamTmpl, NumberParamEntry, TextParamEntry } from './ParamTmpl';
-import { markParentViewsForCheckProjectedViews } from '@angular/core/src/view/util';
 
 export interface ProjectParmTmpl<T1, T2> extends NormalParamTmpl<T1, T2> {
     Proj_MinVehicleLength: T1;
